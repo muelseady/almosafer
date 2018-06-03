@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Sama Travel</string>
+    <string name="desc_offer_image">offer image</string>
+    <string name="txt_special_offer" translatable="true">العروض الجاهزه</string>
+    <string name="txt_custom_offers" translatable="true">البرامج السياحيه الخاصه</string>
+    <string name="txt_history">جميع تعاملاتك</string>
+    <string name="txt_call_us">اتصل بنا</string>
 </resources>

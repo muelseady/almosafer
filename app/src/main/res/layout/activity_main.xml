@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <com.mxn.soul.flowingdrawer_core.FlowingDrawer xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawerlayout"
@@ -13,10 +11,18 @@
     app:edPosition="2">
 
     <!--content-->
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/content"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_special_offers"
+            android:name="com.arts.m3droid.samatravel.ui.specialOffer.SpecialOffersFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </FrameLayout>
 
     <!--menu-->
     <com.mxn.soul.flowingdrawer_core.FlowingMenuLayout
@@ -24,10 +30,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/id_container_menu"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/id_container_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@color/colorPrimary"
+                    android:contentDescription="@string/app_name"
+                    android:paddingTop="@dimen/dp_8"
+                    android:src="@drawable/main_logo" />
+
+                <TextView
+                    android:id="@+id/tv_custom_offer"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_custom_icon"
+                    android:text="@string/txt_custom_offers" />
+
+                <TextView
+                    android:id="@+id/tv_history"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_history_icon"
+                    android:text="@string/txt_history" />
+
+                <TextView
+                    android:id="@+id/tv_call_us"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_call_icon"
+                    android:text="@string/txt_call_us" />
+
+            </LinearLayout>
+        </ScrollView>
 
     </com.mxn.soul.flowingdrawer_core.FlowingMenuLayout>
 </com.mxn.soul.flowingdrawer_core.FlowingDrawer>
