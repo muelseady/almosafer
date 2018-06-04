@@ -3,6 +3,8 @@
     <string name="desc_offer_image">offer image</string>
     <string name="txt_special_offer" translatable="true">العروض الجاهزه</string>
     <string name="txt_custom_offers" translatable="true">البرامج السياحيه الخاصه</string>
-    <string name="txt_history">جميع تعاملاتك</string>
+    <string name="txt_history">جميع التعاملات</string>
     <string name="txt_call_us">اتصل بنا</string>
+    <string name="txt_share">شارك البرنامج</string>
+    <string name="txt_sign_out">تسجيل خروج</string>
 </resources>

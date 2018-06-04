@@ -66,6 +66,25 @@
                     android:drawableStart="@drawable/drawer_call_icon"
                     android:text="@string/txt_call_us" />
 
+                <TextView
+                    android:id="@+id/tv_share"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_share_icon"
+                    android:text="@string/txt_share" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_32"
+                    android:background="@color/cardview_dark_background" />
+
+                <TextView
+                    android:id="@+id/tv_signOut"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_signout_icon"
+                    android:text="@string/txt_sign_out" />
             </LinearLayout>
         </ScrollView>
 

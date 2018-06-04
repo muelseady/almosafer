@@ -7,6 +7,7 @@
     android:layout_marginEnd="@dimen/dp_8"
     android:layout_marginStart="@dimen/dp_8"
     android:layout_marginTop="@dimen/dp_16"
+    android:background="@color/colorPrimary"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -16,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        android:id="@+id/iv_offer_card"
         android:contentDescription="@string/desc_offer_image"
-        android:scaleType="fitCenter"
-        android:src="@drawable/special_card_holder" />
+        android:scaleType="fitCenter" />
 
 </android.support.v7.widget.CardView>

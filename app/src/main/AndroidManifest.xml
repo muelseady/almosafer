@@ -23,7 +23,8 @@
             android:parentActivityName=".ui.MainActivity" />
         <activity android:name=".ui.HistoryActivity"
             android:parentActivityName=".ui.MainActivity"/>
-        <activity android:name=".ui.CallUsActivity" />
+        <activity android:name=".ui.CallUsActivity"
+            android:parentActivityName=".ui.MainActivity"/>
     </application>
 
 </manifest>
