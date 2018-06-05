@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@color/colorPrimary">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="top"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/iv_offer_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/txt_special_offer"
+                android:scaleType="centerCrop"
+                app:layout_scrollFlags="enterAlwaysCollapsed" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/main_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layoutDirection="rtl"
+                android:paddingTop="@dimen/dp_16"
+                app:layout_collapseMode="pin"
+                app:maxButtonHeight="56dp"
+                app:title="@string/txt_special_offer" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_offer_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربي "
+                    android:textSize="22sp" />
+            </android.support.v7.widget.CardView>
+
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/btn_special_offer_request"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/colorAccent"
+                android:minWidth="100dp"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:text="@string/txt_request_offer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

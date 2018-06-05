@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -8,6 +8,28 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:layoutDirection">rtl</item>
     </style>
+
+    <style name="NoActionTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--<style name="MainActivityTheme" parent="AppTheme">-->
+    <!--&lt;!&ndash; enable window content transitions &ndash;&gt;-->
+    <!--<item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>-->
+
+    <!--&lt;!&ndash; specify enter and exit transitions &ndash;&gt;-->
+    <!--<item name="android:windowEnterTransition" tools:targetApi="lollipop">@transition/explode</item>-->
+
+    <!--&lt;!&ndash; specify shared element transitions &ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:windowSharedElementEnterTransition">&ndash;&gt;-->
+    <!--&lt;!&ndash;@transition/change_image_transform&ndash;&gt;-->
+    <!--&lt;!&ndash;</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:windowSharedElementExitTransition">&ndash;&gt;-->
+    <!--&lt;!&ndash;@transition/change_image_transform&ndash;&gt;-->
+    <!--&lt;!&ndash;</item>&ndash;&gt;-->
+    <!--</style>-->
 
     <style name="drawer_text" parent="Base.TextAppearance.AppCompat.Medium">
         <item name="android:layout_width">wrap_content</item>

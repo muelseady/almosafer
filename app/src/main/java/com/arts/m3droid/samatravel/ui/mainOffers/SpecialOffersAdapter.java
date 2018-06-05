@@ -1,4 +1,4 @@
-package com.arts.m3droid.samatravel.ui;
+package com.arts.m3droid.samatravel.ui.mainOffers;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +15,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class SpecialOffersAdapter extends RecyclerView.Adapter<SpecialOffersAdapter.SpecialViewHolder> {
 
@@ -43,9 +42,6 @@ public class SpecialOffersAdapter extends RecyclerView.Adapter<SpecialOffersAdap
 
     @Override
     public void onBindViewHolder(@NonNull SpecialViewHolder holder, int position) {
-
-        Timber.plant(new Timber.DebugTree());
-        Timber.d("onBind called " + specialOffers.get(position).getImageUrl());
         ImageUtils.setImageOnImageView(specialOffers.get(position).getImageUrl(), holder.offerCard);
     }
 

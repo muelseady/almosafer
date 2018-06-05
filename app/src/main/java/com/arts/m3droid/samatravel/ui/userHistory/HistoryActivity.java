@@ -1,4 +1,4 @@
-package com.arts.m3droid.samatravel.ui;
+package com.arts.m3droid.samatravel.ui.userHistory;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -72,6 +72,12 @@
                     android:drawableStart="@drawable/drawer_share_icon"
                     android:text="@string/txt_share" />
 
+                <TextView
+                    android:id="@+id/tv_fav"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_fav_icon"
+                    android:text="@string/txt_share" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

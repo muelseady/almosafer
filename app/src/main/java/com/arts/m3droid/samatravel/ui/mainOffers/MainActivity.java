@@ -1,6 +1,5 @@
-package com.arts.m3droid.samatravel.ui;
+package com.arts.m3droid.samatravel.ui.mainOffers;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,17 +8,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
 import com.arts.m3droid.samatravel.model.SpecialOffer;
+import com.arts.m3droid.samatravel.ui.callUs.CallUsActivity;
+import com.arts.m3droid.samatravel.ui.customOffers.CustomOffersActivity;
+import com.arts.m3droid.samatravel.ui.mainOffers.details.SpecialOffersDetailsActivity;
+import com.arts.m3droid.samatravel.ui.userHistory.HistoryActivity;
 import com.arts.m3droid.samatravel.utils.FirebaseFactory;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
@@ -54,17 +57,23 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-        Timber.plant(new Timber.DebugTree());
         specialOffers = new ArrayList<>();
 
         mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
 
+        setUpAnimations();
         setUpToolbar();
         loadData();
 
         tvCustomOffer.setOnClickListener(v -> startAnotherActivity(CustomOffersActivity.class));
         tvHistory.setOnClickListener(v -> startAnotherActivity(HistoryActivity.class));
         tvCallUs.setOnClickListener(v -> startAnotherActivity(CallUsActivity.class));
+    }
+
+    private void setUpAnimations() {
+        YoYo.with(Techniques.Landing)
+                .duration(2000)
+                .playOn(rvSpecialOffers);
     }
 
     private void loadData() {
@@ -76,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     SpecialOffer specialOffer = dataSnapshot1.getValue(SpecialOffer.class);
-                    Timber.d("special offer " + specialOffer.getName());
+                    Timber.d("special offer %s", specialOffer.getName());
                     specialOffers.add(specialOffer);
                 }
                 setUpRecyclerView();
@@ -89,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
     }
 
     private void setUpRecyclerView() {
-        Timber.d("special offers array " + specialOffers.get(0).getImageUrl());
+        Timber.d("special offers array %s", specialOffers.get(0).getImageUrl());
         rvSpecialOffers.setHasFixedSize(true);
         rvSpecialOffers.setLayoutManager(new LinearLayoutManager(this));
         rvSpecialOffers.setAdapter(new SpecialOffersAdapter(specialOffers, this));
@@ -119,6 +128,9 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
 
     @Override
     public void onClick(int position) {
+        Intent intent = new Intent(this, SpecialOffersDetailsActivity.class);
+        intent.putExtra(Constants.DATA_SPECIAL_OFFER, specialOffers.get(position));
+        startActivity(intent);
 
     }
 }
