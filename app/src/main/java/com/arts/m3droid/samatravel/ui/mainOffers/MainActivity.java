@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
     public void onClick(int position) {
         Intent intent = new Intent(this, SpecialOffersDetailsActivity.class);
         intent.putExtra(Constants.DATA_SPECIAL_OFFER, specialOffers.get(position));
+
         startActivity(intent);
 
     }

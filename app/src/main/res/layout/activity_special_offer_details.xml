@@ -2,8 +2,9 @@
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@android:color/white">
 
     <android.support.design.widget.AppBarLayout
@@ -14,6 +15,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layoutDirection="rtl"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -23,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
+                android:background="#200000"
                 android:contentDescription="@string/txt_special_offer"
                 android:scaleType="centerCrop"
                 app:layout_scrollFlags="enterAlwaysCollapsed" />
@@ -31,57 +34,81 @@
                 android:id="@+id/main_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layoutDirection="rtl"
-                android:paddingTop="@dimen/dp_16"
                 app:layout_collapseMode="pin"
-                app:maxButtonHeight="56dp"
-                app:title="@string/txt_special_offer" />
+                app:maxButtonHeight="?attr/actionBarSize"
+                app:titleTextColor="@color/colorAccent" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/container_nested_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dp_16">
 
             <android.support.v7.widget.CardView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_32"
+                app:layout_constraintBottom_toTopOf="@+id/container_contacts"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tv_offer_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربي "
-                    android:textSize="22sp" />
+                    android:layout_margin="@dimen/dp_4"
+                    android:layoutDirection="rtl"
+                    android:text="العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربي  العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربي العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربي العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربي "
+                    android:textSize="@dimen/sp_16" />
             </android.support.v7.widget.CardView>
 
-            <com.dd.processbutton.iml.ActionProcessButton
-                android:id="@+id/btn_special_offer_request"
-                android:layout_width="wrap_content"
-                android:layout_height="56dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/dp_16"
-                android:layout_marginEnd="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_16"
-                android:background="@color/colorAccent"
-                android:minWidth="100dp"
-                android:paddingEnd="@dimen/dp_16"
-                android:paddingStart="@dimen/dp_16"
-                android:text="@string/txt_request_offer"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/container_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:layout_margin="@dimen/dp_8"
+                android:layoutDirection="rtl"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-        </LinearLayout>
-    </ScrollView>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="76dp"
+                    android:contentDescription="@string/dsc_social_media"
+                    android:src="@drawable/twitter_icon" />
 
+                <com.dd.processbutton.iml.ActionProcessButton
+                    android:id="@+id/btn_special_offer_request"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:background="@color/colorAccent"
+                    android:minWidth="60dp"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingEnd="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_16"
+                    android:paddingTop="@dimen/dp_8"
+                    android:text="@string/txt_request_offer"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

@@ -1,11 +1,23 @@
 <resources>
-    <string name="app_name">Sama Travel</string>
+    <string name="app_name">سما المسافر</string>
     <string name="desc_offer_image">offer image</string>
-    <string name="txt_special_offer" translatable="true">العروض الجاهزه</string>
+    <string name="txt_special_offer" translatable="true">عروض مصممه لك</string>
     <string name="txt_custom_offers" translatable="true">البرامج السياحيه الخاصه</string>
     <string name="txt_history">جميع التعاملات</string>
     <string name="txt_call_us">اتصل بنا</string>
     <string name="txt_share">شارك البرنامج</string>
     <string name="txt_sign_out">تسجيل خروج</string>
     <string name="txt_request_offer">اطلب العرض الان</string>
+    <string name="txt_fav_offers">البرامج المفضله</string>
+    <string name="dsc_social_media">social_media</string>
+    <string name="txt_notifi_message">برجاء ادخال بياناتك وستصلك رساله للتواصل معك من احد ممثلينا</string>
+    <string name="txt_name">الاسم</string>
+    <string name="txt_first">الاول</string>
+    <string name="txt_family">العائله</string>
+    <string name="txt_number">رقم الجوال</string>
+    <string name="txt_name_two">الثاني</string>
+    <string name="txt_date_from">المغادره</string>
+    <string name="txt_date_to">الرجوع</string>
+    <string name="txt_ppl_number">عدد الاشخاص</string>
+    <string name="txt_appropriate_date">التاريخ المناسب</string>
 </resources>

@@ -12,7 +12,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.mainOffers.MainActivity"
-            android:configChanges="orientation|screenSize|keyboard">
+            android:configChanges="orientation|screenSize|keyboard"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,8 +31,12 @@
             android:parentActivityName=".ui.mainOffers.MainActivity" />
         <activity
             android:name=".ui.mainOffers.details.SpecialOffersDetailsActivity"
+            android:launchMode="singleTop"
             android:parentActivityName=".ui.mainOffers.MainActivity"
             android:theme="@style/NoActionTheme" />
+        <activity
+            android:name=".ui.mainOffers.details.RequestSpecialOfferActivity"
+            android:parentActivityName=".ui.mainOffers.details.SpecialOffersDetailsActivity" />
     </application>
 
 </manifest>

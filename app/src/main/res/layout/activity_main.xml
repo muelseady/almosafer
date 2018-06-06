@@ -42,10 +42,10 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@color/colorPrimary"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
-                    android:paddingTop="@dimen/dp_8"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/main_logo" />
 
                 <TextView
@@ -61,6 +61,12 @@
                     android:text="@string/txt_history" />
 
                 <TextView
+                    android:id="@+id/tv_fav"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_fav_icon"
+                    android:text="@string/txt_fav_offers" />
+
+                <TextView
                     android:id="@+id/tv_call_us"
                     style="@style/drawer_text"
                     android:drawableStart="@drawable/drawer_call_icon"
@@ -72,11 +78,6 @@
                     android:drawableStart="@drawable/drawer_share_icon"
                     android:text="@string/txt_share" />
 
-                <TextView
-                    android:id="@+id/tv_fav"
-                    style="@style/drawer_text"
-                    android:drawableStart="@drawable/drawer_fav_icon"
-                    android:text="@string/txt_share" />
 
                 <View
                     android:layout_width="match_parent"
