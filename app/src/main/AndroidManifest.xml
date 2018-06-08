@@ -13,7 +13,7 @@
         <activity
             android:name=".ui.mainOffers.MainActivity"
             android:configChanges="orientation|screenSize|keyboard"
-            android:launchMode="singleTop">
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

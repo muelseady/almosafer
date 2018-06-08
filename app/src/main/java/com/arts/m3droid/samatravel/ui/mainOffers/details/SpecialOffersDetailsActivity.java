@@ -1,10 +1,9 @@
 package com.arts.m3droid.samatravel.ui.mainOffers.details;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,13 +15,21 @@ import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
 import com.arts.m3droid.samatravel.model.SpecialOffer;
 import com.arts.m3droid.samatravel.utils.ImageUtils;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.dd.processbutton.iml.ActionProcessButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
+import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleFb;
+import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleTwitter;
+
 public class SpecialOffersDetailsActivity extends AppCompatActivity {
+
+    @BindView(R.id.container)
+    CoordinatorLayout container;
 
     @BindView(R.id.iv_offer_image)
     ImageView ivSpecialOffer;
@@ -58,14 +65,17 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
         handleReceivedIntent();
         setUpToolbar();
         setUpRequestButton();
-
+        setUpAnimations();
         nestedScrollView.setNestedScrollingEnabled(true);
 
-        ivFb.setOnClickListener(v -> handleFb());
-        ivTwitter.setOnClickListener(v -> handleTwitter());
+        ivFb.setOnClickListener(v -> handleFb(this));
+        ivTwitter.setOnClickListener(v -> handleTwitter(this));
+    }
 
-        //https://www.facebook.com/سما-المسافر-للسفر-والسياحة-518141868537030/
-        //https://twitter.com/Sama_Almosafer?lang=en
+    private void setUpAnimations() {
+        YoYo.with(Techniques.BounceInUp)
+                .duration(2000)
+                .playOn(container);
     }
 
     private void setUpRequestButton() {
@@ -96,46 +106,5 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
         actionBar.setTitle(specialOffer.getName());
     }
 
-    private void handleFb() {
-        String FACEBOOK_URL = "https://www.facebook.com/سما-المسافر-للسفر-والسياحة-518141868537030";
-        String FACEBOOK_PAGE_ID = "سما-المسافر-للسفر-والسياحة-518141868537030";
 
-        String finalUrl = null;
-
-//method to get the right URL to use in the intent
-        PackageManager packageManager = getPackageManager();
-        try {
-            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
-            if (versionCode >= 3002850) { //newer versions of fb app
-                finalUrl = "fb://facewebmodal/f?href=" + FACEBOOK_URL;
-            } else { //older versions of fb app
-                finalUrl = "fb://page/" + FACEBOOK_PAGE_ID;
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            finalUrl = FACEBOOK_URL; //normal web url
-        }
-
-        Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
-        String facebookUrl = finalUrl;
-        facebookIntent.setData(Uri.parse(facebookUrl));
-        startActivity(facebookIntent);
-
-    }
-
-    private void handleTwitter() {
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("twitter://Sama_Almosafer?lang=en"));
-            startActivity(intent);
-        } catch (Exception e) {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/Sama_Almosafer?lang=en")));
-        }
-    }
-
-    private void handleSnap() {
-    }
-
-    private void handleInsta() {
-    }
 }

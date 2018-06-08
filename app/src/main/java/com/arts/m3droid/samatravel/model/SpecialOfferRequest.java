@@ -12,10 +12,11 @@ public class SpecialOfferRequest implements Parcelable {
     private String userId;
     private String notes;
     private String offerName;
-    private long dateFrom, dateTo;
+    private String dateFrom, dateTo;
     private int adults, children, infants, over65;
+    private String empPriKey;
 
-    public SpecialOfferRequest(String name, String number, long dateFrom, long dateTo, String userId,
+    public SpecialOfferRequest(String name, String number, String dateFrom, String dateTo, String userId,
                                int adults, int children, int infants, int over65, String notes,
                                String offerName) {
         this.name = name;
@@ -31,6 +32,13 @@ public class SpecialOfferRequest implements Parcelable {
         this.offerName = offerName;
     }
 
+    public void setEmpPriKey(String empPriKey) {
+        this.empPriKey = empPriKey;
+    }
+
+    public String getEmpPriKey() {
+        return empPriKey;
+    }
 
     public String getName() {
         return name;
@@ -40,11 +48,11 @@ public class SpecialOfferRequest implements Parcelable {
         return notes;
     }
 
-    public long getDateFrom() {
+    public String getDateFrom() {
         return dateFrom;
     }
 
-    public long getDateTo() {
+    public String getDateTo() {
         return dateTo;
     }
 
@@ -89,12 +97,13 @@ public class SpecialOfferRequest implements Parcelable {
         dest.writeString(this.userId);
         dest.writeString(this.notes);
         dest.writeString(this.offerName);
-        dest.writeLong(this.dateFrom);
-        dest.writeLong(this.dateTo);
+        dest.writeString(this.dateFrom);
+        dest.writeString(this.dateTo);
         dest.writeInt(this.adults);
         dest.writeInt(this.children);
         dest.writeInt(this.infants);
         dest.writeInt(this.over65);
+        dest.writeString(this.empPriKey);
     }
 
     protected SpecialOfferRequest(Parcel in) {
@@ -103,12 +112,13 @@ public class SpecialOfferRequest implements Parcelable {
         this.userId = in.readString();
         this.notes = in.readString();
         this.offerName = in.readString();
-        this.dateFrom = in.readLong();
-        this.dateTo = in.readLong();
+        this.dateFrom = in.readString();
+        this.dateTo = in.readString();
         this.adults = in.readInt();
         this.children = in.readInt();
         this.infants = in.readInt();
         this.over65 = in.readInt();
+        this.empPriKey = in.readString();
     }
 
     public static final Creator<SpecialOfferRequest> CREATOR = new Creator<SpecialOfferRequest>() {

@@ -68,19 +68,14 @@
 
             <EditText
                 android:id="@+id/et_date_from"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/et_date_req"
                 android:hint="@string/txt_date_from"
-                android:inputType="date" />
+                tools:ignore="KeyboardInaccessibleWidget" />
 
             <EditText
                 android:id="@+id/et_date_to"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/txt_date_to"
-                android:inputType="date" />
+                style="@style/et_date_req"
+                android:hint="@string/txt_date_to" />
         </LinearLayout>
 
         <TextView
@@ -145,6 +140,7 @@
             android:textSize="14sp" />
 
         <EditText
+            android:id="@+id/emp_unique_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="4"

@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RequestSpecialOfferActivity extends AppCompatActivity {
+public class RequestSpecialOfferActivity extends AppCompatActivity implements DatePicker.OnDatePickerDialogSet {
 
 
     @BindView(R.id.et_first_name)
@@ -47,6 +47,8 @@ public class RequestSpecialOfferActivity extends AppCompatActivity {
     EditText etNotes;
     @BindView(R.id.btn_special_offer_request)
     ActionProcessButton btnSpecialOfferRequest;
+    @BindView(R.id.emp_unique_num)
+    EditText etEmpNum;
 
     private DatabaseReference reqSpecialOfferRef =
             FirebaseFactory.getDatabase().getReference(Constants.NODE_SPECIAL_OFFER_REQUEST);
@@ -66,12 +68,15 @@ public class RequestSpecialOfferActivity extends AppCompatActivity {
 
         btnSpecialOfferRequest.setOnClickListener(v -> submitButtonClicked());
 
-        setUpDatePicker();
+        etDateFrom.setOnClickListener(v -> setUpDatePicker(true));
+        etDateTo.setOnClickListener(v -> setUpDatePicker(false));
     }
 
-    private void setUpDatePicker() {
-
+    private void setUpDatePicker(Boolean toOrFrom) {
         DatePicker newFragment = new DatePicker();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("toOrFrom", toOrFrom);
+        newFragment.setArguments(bundle);
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
@@ -80,8 +85,8 @@ public class RequestSpecialOfferActivity extends AppCompatActivity {
         String warningMessage = Constants.REQUIRED_FIELD;
         String name = null;
         String number = null;
-        long dateFrom = 0;
-        long dateTo = 0;
+        String dateFrom = null;
+        String dateTo = null;
         int adults = 0, over65 = 0, children = 0, infants = 0;
         String notes;
 
@@ -99,10 +104,10 @@ public class RequestSpecialOfferActivity extends AppCompatActivity {
             number = extractTrimmedString(etNumber);
 
         if (Validator.validateETNotNull(etDateFrom, warningMessage))
-            dateFrom = Long.parseLong(extractTrimmedString(etDateFrom));
+            dateFrom = extractTrimmedString(etDateFrom);
 
         if (Validator.validateETNotNull(etDateTo, warningMessage))
-            dateTo = Long.parseLong(extractTrimmedString(etDateTo));
+            dateTo = extractTrimmedString(etDateTo);
 
 
         if (!extractTrimmedString(etPplAdults).isEmpty())
@@ -127,6 +132,9 @@ public class RequestSpecialOfferActivity extends AppCompatActivity {
                         adults, children, infants, over65,
                         notes, specialOffer.getName());
 
+        if (etEmpNum.getText() != null)
+            specialOfferRequest.setEmpPriKey(etEmpNum.getText().toString().trim());
+
         if (Validator.validateETHasError(etFirstName, etSecondName, etThirdName,
                 etDateFrom, etDateTo,
                 etNumber)) {
@@ -143,14 +151,25 @@ public class RequestSpecialOfferActivity extends AppCompatActivity {
         return editText.getText().toString().trim();
     }
 
+
+    @Override
+    public void onFromDateSet(int year, int month, int dayOdMonth) {
+        String date = dayOdMonth + " / " + month + " / " + year;
+        etDateFrom.setText(date);
+    }
+
+    @Override
+    public void onToDateSet(int year, int month, int dayOdMonth) {
+        String date = dayOdMonth + " / " + month + " / " + year;
+        etDateTo.setText(date);
+    }
+
     private void setUpToolbar() {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar == null) return;
-
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(specialOffer.getName());
+        actionBar.setTitle(R.string.txt_done_request);
     }
-
 }

@@ -29,4 +29,6 @@
     <string name="txt_contact_us">تواصل معنا …</string>
     <string name="txt_offer_delivered">تم ايصال الطلب. ستصلك رساله عاجلا من احد ممثلينا</string>
     <string name="txt_if_invited">في حاله تم دعوتك الي البرنامج بواسطه احد ممثلينا برجاء ادخال الرقم الخاص به</string>
+    <string name="txt_welcom">تمتع بتصفح عروض سما المسافر المختلفه</string>
+    <string name="txt_sign_in_again">برجاء اعاده تسجيل الدخول</string>
 </resources>
