@@ -2,7 +2,6 @@
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -18,7 +17,7 @@
             android:layoutDirection="rtl"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="top"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
                 android:id="@+id/iv_offer_image"
@@ -49,12 +48,14 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/dp_16">
+            android:layout_marginTop="@dimen/dp_16">
 
             <android.support.v7.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_32"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:layout_marginStart="@dimen/dp_8"
                 app:layout_constraintBottom_toTopOf="@+id/container_contacts"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,32 +66,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_4"
-                    android:layoutDirection="rtl"
-                    android:text="العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربي  العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربي العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربي العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربيه العربيه العربيه العربيالعربيه العربي "
+                    android:textColor="@android:color/black"
                     android:textSize="@dimen/sp_16" />
             </android.support.v7.widget.CardView>
 
             <LinearLayout
                 android:id="@+id/container_contacts"
                 android:layout_width="match_parent"
-                android:layout_height="76dp"
-                android:layout_margin="@dimen/dp_8"
+                android:layout_height="wrap_content"
                 android:layoutDirection="rtl"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="76dp"
-                    android:contentDescription="@string/dsc_social_media"
-                    android:src="@drawable/twitter_icon" />
 
                 <com.dd.processbutton.iml.ActionProcessButton
                     android:id="@+id/btn_special_offer_request"
                     android:layout_width="wrap_content"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_16"
@@ -100,11 +94,54 @@
                     android:paddingEnd="@dimen/dp_16"
                     android:paddingStart="@dimen/dp_16"
                     android:paddingTop="@dimen/dp_8"
-                    android:text="@string/txt_request_offer"
+                    android:text="@string/txt_done_request"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_62"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_contacts"
+                        style="@style/tv_request_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dp_16"
+                        android:paddingBottom="@dimen/dp_4"
+                        android:text="@string/txt_contact_us" />
+
+                    <ImageView
+                        android:id="@+id/iv_twitter"
+                        style="@style/desc_social_media"
+                        android:contentDescription="@string/dsc_social_media"
+                        android:src="@drawable/twitter_icon" />
+
+                    <ImageView
+                        android:id="@+id/iv_fb"
+                        style="@style/desc_social_media"
+                        android:contentDescription="@string/dsc_social_media"
+                        android:src="@drawable/fb_icon" />
+
+                    <ImageView
+                        android:id="@+id/iv_instagram"
+                        style="@style/desc_social_media"
+                        android:contentDescription="@string/dsc_social_media"
+                        android:src="@drawable/instagram_icon" />
+
+                    <ImageView
+                        android:id="@+id/iv_snap"
+                        style="@style/desc_social_media"
+                        android:contentDescription="@string/dsc_social_media"
+                        android:src="@drawable/snapchat_icon" />
+                </LinearLayout>
+
 
             </LinearLayout>
 

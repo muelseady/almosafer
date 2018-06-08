@@ -20,4 +20,13 @@
     <string name="txt_date_to">الرجوع</string>
     <string name="txt_ppl_number">عدد الاشخاص</string>
     <string name="txt_appropriate_date">التاريخ المناسب</string>
+    <string name="txt_adults">كبار</string>
+    <string name="txt_over65">كبار فوق ٦٥ سنه</string>
+    <string name="txt_children">اطفال ۲-۱۲ سنه</string>
+    <string name="txt_infant">رضع ۰ - ۲ سنه</string>
+    <string name="txt_desc">استفسارات</string>
+    <string name="txt_done_request">اطلب العرض</string>
+    <string name="txt_contact_us">تواصل معنا …</string>
+    <string name="txt_offer_delivered">تم ايصال الطلب. ستصلك رساله عاجلا من احد ممثلينا</string>
+    <string name="txt_if_invited">في حاله تم دعوتك الي البرنامج بواسطه احد ممثلينا برجاء ادخال الرقم الخاص به</string>
 </resources>

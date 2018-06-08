@@ -49,6 +49,8 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
 
     implementation 'com.github.dmytrodanylyk.android-process-button:library:1.0.4' //processButton
+    implementation 'info.hoang8f:fbutton:1.0.5' //FlatButton
+
 
     implementation 'com.jakewharton:butterknife:8.8.1' //ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

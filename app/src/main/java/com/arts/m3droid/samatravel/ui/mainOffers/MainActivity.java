@@ -3,6 +3,7 @@ package com.arts.m3droid.samatravel.ui.mainOffers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,10 +21,10 @@ import com.arts.m3droid.samatravel.ui.userHistory.HistoryActivity;
 import com.arts.m3droid.samatravel.utils.FirebaseFactory;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 
@@ -32,7 +33,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements SpecialOffersAdapter.OnItemClicked {
 
@@ -80,25 +80,38 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         specialOffersDatabaseRef =
                 FirebaseFactory.getDatabase().getReference().child(Constants.NODE_SPECIAL_OFFERS);
 
-        specialOffersDatabaseRef.addValueEventListener(new ValueEventListener() {
+        specialOffersDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    SpecialOffer specialOffer = dataSnapshot1.getValue(SpecialOffer.class);
-                    Timber.d("special offer %s", specialOffer.getName());
-                    specialOffers.add(specialOffer);
-                }
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                SpecialOffer specialOffer = dataSnapshot.getValue(SpecialOffer.class);
+                specialOffers.add(specialOffer);
                 setUpRecyclerView();
             }
 
             @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
 
     private void setUpRecyclerView() {
-        Timber.d("special offers array %s", specialOffers.get(0).getImageUrl());
         rvSpecialOffers.setHasFixedSize(true);
         rvSpecialOffers.setLayoutManager(new LinearLayoutManager(this));
         rvSpecialOffers.setAdapter(new SpecialOffersAdapter(specialOffers, this));
@@ -132,6 +145,5 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         intent.putExtra(Constants.DATA_SPECIAL_OFFER, specialOffers.get(position));
 
         startActivity(intent);
-
     }
 }

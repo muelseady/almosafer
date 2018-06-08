@@ -42,4 +42,34 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="et_request_special_offer">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <style name="et_request_ppl">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:inputType">number</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="tv_request_main">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dp_16</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="desc_social_media">
+        <item name="android:layout_width">@dimen/dp_32</item>
+        <item name="android:layout_height">@dimen/dp_32</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
 </resources>
