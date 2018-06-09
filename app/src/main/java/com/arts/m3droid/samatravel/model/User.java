@@ -8,6 +8,9 @@ public class User implements Parcelable {
     private String uid, name, number, email;
     private String doneOffers, goingOffers;
 
+    public User() {
+    }
+
     public User(String uid, String name, String number, String email) {
         this.uid = uid;
         this.name = name;

@@ -11,6 +11,7 @@ import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
 import com.arts.m3droid.samatravel.model.SpecialOffer;
 import com.arts.m3droid.samatravel.model.SpecialOfferRequest;
+import com.arts.m3droid.samatravel.model.User;
 import com.arts.m3droid.samatravel.utils.DatePicker;
 import com.arts.m3droid.samatravel.utils.FirebaseFactory;
 import com.arts.m3droid.samatravel.utils.Validator;
@@ -53,7 +54,11 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
     private DatabaseReference reqSpecialOfferRef =
             FirebaseFactory.getDatabase().getReference(Constants.NODE_SPECIAL_OFFER_REQUEST);
 
+    private DatabaseReference userReference =
+            FirebaseFactory.getDatabase().getReference().child(Constants.NODE_USERS);
+
     private SpecialOffer specialOffer;
+    private User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +68,7 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
 
 
         specialOffer = getIntent().getParcelableExtra(Constants.DATA_SPECIAL_OFFER);
+        user = getIntent().getParcelableExtra(Constants.NODE_USERS);
 
         setUpToolbar();
 
@@ -123,12 +129,11 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
         if (!extractTrimmedString(etInfant).isEmpty())
             adults = Integer.parseInt(extractTrimmedString(etInfant));
 
-
         notes = extractTrimmedString(etNotes);
 
         SpecialOfferRequest specialOfferRequest =
                 new SpecialOfferRequest(name, number,
-                        dateFrom, dateTo, "ahmedsd1212",
+                        dateFrom, dateTo, user.getUid(),
                         adults, children, infants, over65,
                         notes, specialOffer.getName());
 
@@ -139,10 +144,15 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
                 etDateFrom, etDateTo,
                 etNumber)) {
 
-            reqSpecialOfferRef.push().setValue(specialOfferRequest);
-            finish();
+            reqSpecialOfferRef = reqSpecialOfferRef.push();
+            String requestOfferKey = reqSpecialOfferRef.getKey();
+            reqSpecialOfferRef.setValue(specialOfferRequest);
+
+            user.setGoingOffers(requestOfferKey);
+            userReference.child(user.getUid()).child(Constants.NODE_GOINGON_OFFERS).push().setValue(requestOfferKey);
 
             Toast.makeText(getApplicationContext(), R.string.txt_offer_delivered, Toast.LENGTH_LONG).show();
+            finish();
         }
 
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
 import com.arts.m3droid.samatravel.model.SpecialOffer;
+import com.arts.m3droid.samatravel.model.User;
 import com.arts.m3droid.samatravel.utils.ImageUtils;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -51,6 +52,7 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
     ImageView ivSnap;
 
     private SpecialOffer specialOffer;
+    private User user;
 
     //Todo When click on the icons of social medias links works xD
 
@@ -73,8 +75,8 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
     }
 
     private void setUpAnimations() {
-        YoYo.with(Techniques.BounceInUp)
-                .duration(2000)
+        YoYo.with(Techniques.RollIn)
+                .duration(1000)
                 .playOn(container);
     }
 
@@ -85,12 +87,14 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
         btnRequestOffer.setOnClickListener(v -> {
             Intent intent = new Intent(this, RequestSpecialOfferActivity.class);
             intent.putExtra(Constants.DATA_SPECIAL_OFFER, specialOffer);
+            intent.putExtra(Constants.NODE_USERS, user);
             startActivity(intent);
         });
     }
 
     private void handleReceivedIntent() {
         specialOffer = getIntent().getParcelableExtra(Constants.DATA_SPECIAL_OFFER);
+        user = getIntent().getParcelableExtra(Constants.NODE_USERS);
         ImageUtils.setImageOnImageView(specialOffer.getImageUrl(), ivSpecialOffer);
         tvOfferDetails.setText(specialOffer.getDetails());
     }
@@ -101,7 +105,7 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
         if (actionBar == null) return;
 
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
+//        actionBar.setDisplayShowTitleEnabled(true);
 
         actionBar.setTitle(specialOffer.getName());
     }

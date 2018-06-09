@@ -30,6 +30,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 
@@ -39,6 +40,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static com.arts.m3droid.samatravel.Constants.RC_SIGN_IN;
 
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
     TextView tvCallUs;
     @BindView(R.id.tv_signOut)
     TextView signOut;
+
+    private User user;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authListener;
@@ -81,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         loadData();
         setUpAnimations();
 
-
         tvCustomOffer.setOnClickListener(v -> startAnotherActivity(CustomOffersActivity.class));
         tvHistory.setOnClickListener(v -> startAnotherActivity(HistoryActivity.class));
         tvCallUs.setOnClickListener(v -> startAnotherActivity(CallUsActivity.class));
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
             if (user != null) { // User authorized
                 addTheUserDataToDb(user);
             } else { // User not authorized
+                Timber.d("user not auth");
                 showSignIn();
             }
         };
@@ -108,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
      *                 Object and send it to the database
      */
     private void addTheUserDataToDb(FirebaseUser authUser) {
+
         String userKey = authUser.getUid();
         String userName = authUser.getDisplayName();
         String userNumber = null;
@@ -118,15 +123,43 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         if (authUser.getEmail() != null) {
             userEmail = authUser.getEmail();
         }
-        User user = new User(userKey, userName, userNumber, userEmail);
+        user = new User(userKey, userName, userNumber, userEmail);
 
-        // To uniquely store the user once with no duplication , Store the user unique id as a key
-        // in the node then store the name and the location of the image url as values to this key
-        //  /"users"-
-        //           |- "userId"-
-        //                       |- "userName"
-        //                       |- "imageUrl"
-        userReference.child(userKey).setValue(user);
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                boolean userAlreadyThere = false;
+
+                for (DataSnapshot userDataSnapShot : dataSnapshot.getChildren()) {
+                    if (userKey.equals(userDataSnapShot.getKey())) {
+
+                        userAlreadyThere = true;
+                        break;
+                    }
+                }
+                // To uniquely store the user once with no duplication , Store the user
+                // unique id as a key in the node then store the name and the location of
+                // the image url as values to this key
+                //  /"users"-
+                //           |- "userId"-
+                //                       |- "userName"
+                //                       |- "imageUrl"
+                if (!userAlreadyThere)
+                    userReference.child(userKey).setValue(user);
+            }
+
+            // Kinda solved a problem and raised another the first problem was with the if statement
+            //Logic was wrong so result deleting the old use and override it with another
+            // Now the problem is when i log out and log in it deletes the old user data and submit a new one
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
@@ -233,6 +266,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
     public void onClick(int position) {
         Intent intent = new Intent(this, SpecialOffersDetailsActivity.class);
         intent.putExtra(Constants.DATA_SPECIAL_OFFER, specialOffers.get(position));
+        intent.putExtra(Constants.NODE_USERS, user);
 
         startActivity(intent);
     }
