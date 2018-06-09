@@ -37,6 +37,7 @@
         <activity
             android:name=".ui.mainOffers.details.RequestSpecialOfferActivity"
             android:parentActivityName=".ui.mainOffers.details.SpecialOffersDetailsActivity" />
+        <activity android:name=".ui.AuthUIActivity" />
     </application>
 
 </manifest>

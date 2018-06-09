@@ -16,6 +16,7 @@ import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
 import com.arts.m3droid.samatravel.model.SpecialOffer;
 import com.arts.m3droid.samatravel.model.User;
+import com.arts.m3droid.samatravel.ui.AuthUIActivity;
 import com.arts.m3droid.samatravel.ui.callUs.CallUsActivity;
 import com.arts.m3droid.samatravel.ui.customOffers.CustomOffersActivity;
 import com.arts.m3droid.samatravel.ui.mainOffers.details.SpecialOffersDetailsActivity;
@@ -35,14 +36,10 @@ import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
-
-import static com.arts.m3droid.samatravel.Constants.RC_SIGN_IN;
 
 public class MainActivity extends AppCompatActivity implements SpecialOffersAdapter.OnItemClicked {
 
@@ -74,9 +71,16 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-
-        verifyUserAuth();
-
+        userReference =
+                FirebaseFactory.getDatabase().getReference(Constants.NODE_USERS);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            startActivity(new Intent(this, AuthUIActivity.class));
+            finish();
+            return;
+        } else {
+            addTheUserDataToDb(currentUser);
+        }
         specialOffers = new ArrayList<>();
 
 
@@ -88,23 +92,21 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         tvCustomOffer.setOnClickListener(v -> startAnotherActivity(CustomOffersActivity.class));
         tvHistory.setOnClickListener(v -> startAnotherActivity(HistoryActivity.class));
         tvCallUs.setOnClickListener(v -> startAnotherActivity(CallUsActivity.class));
-        signOut.setOnClickListener(v -> AuthUI.getInstance().signOut(this)); // Sign out from Auth as simple as that
+        signOut.setOnClickListener(v -> performSignOut()); // Sign out from Auth as simple as that
     }
 
-    private void verifyUserAuth() {
-        userReference =
-                FirebaseFactory.getDatabase().getReference(Constants.NODE_USERS);
-        firebaseAuth = FirebaseAuth.getInstance();
-        authListener = firebaseAuth -> {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user != null) { // User authorized
-                addTheUserDataToDb(user);
-            } else { // User not authorized
-                Timber.d("user not auth");
-                showSignIn();
-            }
-        };
-        firebaseAuth.addAuthStateListener(authListener);
+    private void performSignOut() {
+
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        startActivity(new Intent(this, AuthUIActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(this, R.string.txt_error_signOut, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     /**
@@ -162,36 +164,6 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
 
     }
 
-
-    private void showSignIn() {
-
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setIsSmartLockEnabled(false)
-                        .setAvailableProviders(Arrays.asList(
-                                new AuthUI.IdpConfig.EmailBuilder().build(),
-                                new AuthUI.IdpConfig.GoogleBuilder().build()
-                                //Todo Here is the place to add more providers
-                        ))
-                        .build(),
-                RC_SIGN_IN);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) {
-                // Sign-in succeeded
-                Toast.makeText(this, R.string.txt_welcom, Toast.LENGTH_SHORT).show();
-            } else if (resultCode == RESULT_CANCELED) {
-                // Sign in was canceled by the user, finish the activity
-                Toast.makeText(this, R.string.txt_sign_in_again, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
-    }
 
     private void setUpAnimations() {
         YoYo.with(Techniques.Landing)
