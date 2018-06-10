@@ -26,11 +26,22 @@
     <string name="txt_infant">رضع ۰ - ۲ سنه</string>
     <string name="txt_desc">استفسارات</string>
     <string name="txt_done_request">اطلب العرض</string>
-    <string name="txt_contact_us">تواصل معنا …</string>
+    <string name="txt_contact_us">تواصل مباشره علي …</string>
     <string name="txt_offer_delivered">تم ايصال الطلب. ستصلك رساله عاجلا من احد ممثلينا</string>
     <string name="txt_if_invited">في حاله تم دعوتك الي البرنامج بواسطه احد ممثلينا برجاء ادخال الرقم الخاص به</string>
     <string name="txt_welcom">تمتع بتصفح عروض سما المسافر المختلفه</string>
     <string name="txt_sign_in_again">برجاء اعاده تسجيل الدخول</string>
     <string name="txt_require_internet">برجاء تأكد من وجود انترنت</string>
     <string name="txt_error_signOut">نعتذر حدث خطأ حاول تسجيل الخروج مره اخري</string>
+
+    <string name="facebook_app_id">2165674750334030</string>
+    <string name="fb_login_protocol_scheme">fb2165674750334030</string>
+
+    <!-- ... -->
+    <string name="facebook_application_id" translatable="false">APP_ID</string>
+    <!-- Facebook Application ID, prefixed by 'fb'. Enables Chrome Custom tabs. -->
+    <string name="facebook_login_protocol_scheme" translatable="false">fbAPP_ID</string>
+
+    <string name="twitter_consumer_key" translatable="false">fERj7n8gX5UGy7FcXDnb5NSjP</string>
+    <string name="twitter_consumer_secret" translatable="false">s18xM6PrG1HVaYbMLmTjaBY4gB9nOZVSsC1fkpLGha5mLjZgFv</string>
 </resources>

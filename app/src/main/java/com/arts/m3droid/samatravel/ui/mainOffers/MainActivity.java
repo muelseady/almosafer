@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleFb;
+import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleTwitter;
+
 public class MainActivity extends AppCompatActivity implements SpecialOffersAdapter.OnItemClicked {
 
     @BindView(R.id.drawerlayout)
@@ -56,13 +60,18 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
     TextView tvCallUs;
     @BindView(R.id.tv_signOut)
     TextView signOut;
+    @BindView(R.id.iv_twitter)
+    ImageView ivTwitter;
+    @BindView(R.id.iv_fb)
+    ImageView ivFb;
+    @BindView(R.id.iv_instagram)
+    ImageView ivInstagram;
+    @BindView(R.id.iv_snap)
+    ImageView ivSnap;
 
     private User user;
 
-    private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference userReference;
-    private DatabaseReference specialOfferReference;
     private List<SpecialOffer> specialOffers;
 
     @Override
@@ -89,6 +98,15 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         loadData();
         setUpAnimations();
 
+        setDifferentListeners();
+    }
+
+    private void setDifferentListeners() {
+        //Social media icons listeners
+        ivFb.setOnClickListener(v -> handleFb(this));
+        ivTwitter.setOnClickListener(v -> handleTwitter(this));
+
+        //Side drawer tv listeners
         tvCustomOffer.setOnClickListener(v -> startAnotherActivity(CustomOffersActivity.class));
         tvHistory.setOnClickListener(v -> startAnotherActivity(HistoryActivity.class));
         tvCallUs.setOnClickListener(v -> startAnotherActivity(CallUsActivity.class));
@@ -135,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
 
                 for (DataSnapshot userDataSnapShot : dataSnapshot.getChildren()) {
                     if (userKey.equals(userDataSnapShot.getKey())) {
-
+                        //Checks if the key is in children if not add it as new user if there add nothing
                         userAlreadyThere = true;
                         break;
                     }
@@ -150,11 +168,6 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
                 if (!userAlreadyThere)
                     userReference.child(userKey).setValue(user);
             }
-
-            // Kinda solved a problem and raised another the first problem was with the if statement
-            //Logic was wrong so result deleting the old use and override it with another
-            // Now the problem is when i log out and log in it deletes the old user data and submit a new one
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -172,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
     }
 
     private void loadData() {
-        specialOfferReference =
+        DatabaseReference specialOfferReference =
                 FirebaseFactory.getDatabase().getReference().child(Constants.NODE_SPECIAL_OFFERS);
 
         specialOfferReference.addChildEventListener(new ChildEventListener() {

@@ -6,8 +6,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.arts.m3droid.samatravel.R;
+import com.google.firebase.database.DatabaseReference;
 
 public class HistoryActivity extends AppCompatActivity {
+
+    private DatabaseReference goingOnReference;
+    private DatabaseReference doneOffers;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package com.arts.m3droid.samatravel.ui.mainOffers.details;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class RequestSpecialOfferActivity extends AppCompatActivity implements DatePicker.OnDatePickerDialogSet {
 
@@ -69,6 +71,10 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
 
         specialOffer = getIntent().getParcelableExtra(Constants.DATA_SPECIAL_OFFER);
         user = getIntent().getParcelableExtra(Constants.NODE_USERS);
+        Timber.d("number %s", user.getNumber());
+        Timber.d("name %s", user.getName());
+        extractUserName(user.getName());
+        extractUserNumber(user.getNumber());
 
         setUpToolbar();
 
@@ -131,24 +137,35 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
 
         notes = extractTrimmedString(etNotes);
 
+        // Populate the object with extracted data from edit text views
         SpecialOfferRequest specialOfferRequest =
                 new SpecialOfferRequest(name, number,
                         dateFrom, dateTo, user.getUid(),
                         adults, children, infants, over65,
                         notes, specialOffer.getName());
-
         if (etEmpNum.getText() != null)
             specialOfferRequest.setEmpPriKey(etEmpNum.getText().toString().trim());
 
+        // If all needed data are filled done the needed pushing
         if (Validator.validateETHasError(etFirstName, etSecondName, etThirdName,
                 etDateFrom, etDateTo,
                 etNumber)) {
 
+            //Doing empty push to be able to store the key to add it later to user node
             reqSpecialOfferRef = reqSpecialOfferRef.push();
             String requestOfferKey = reqSpecialOfferRef.getKey();
-            reqSpecialOfferRef.setValue(specialOfferRequest);
 
-            user.setGoingOffers(requestOfferKey);
+            reqSpecialOfferRef.setValue(specialOfferRequest); // push the filled specialOffer
+
+            //Populate the existing user with the new name and number to update his data
+            user.setName(extractTrimmedString(etFirstName) + " " +
+                    extractTrimmedString(etSecondName) + " "
+                    + extractTrimmedString(etThirdName));
+            user.setNumber(etNumber.getText().toString());
+
+            //Push the updated data and the offer key to be in the user node
+            userReference.child(user.getUid()).setValue(user);
+            user.setGoingOnOffers(requestOfferKey); // add the offer key to be in the user node
             userReference.child(user.getUid()).child(Constants.NODE_GOINGON_OFFERS).push().setValue(requestOfferKey);
 
             Toast.makeText(getApplicationContext(), R.string.txt_offer_delivered, Toast.LENGTH_LONG).show();
@@ -157,8 +174,25 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
 
     }
 
+    @NonNull
     private String extractTrimmedString(EditText editText) {
         return editText.getText().toString().trim();
+    }
+
+    private void extractUserName(String name) {
+        if (name == null) return;
+        EditText[] editTexts = {etFirstName, etSecondName, etThirdName};
+        String[] tripleName = name.split(" ");
+        for (int i = 0; i < tripleName.length; i++) {
+
+            editTexts[i].setText(tripleName[i]);
+        }
+
+    }
+
+    private void extractUserNumber(String number) {
+        if (number == null) return;
+        etNumber.setText(number);
     }
 
 

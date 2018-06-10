@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    app:edMenuBackground="#dddddd"
+    app:edMenuBackground="#FFFF"
     app:edMenuSize="260dp"
     app:edPosition="2">
 
     <!--content-->
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@android:color/white"
         android:orientation="vertical">
 
@@ -21,12 +21,21 @@
             android:id="@+id/rv_special_offers"
             android:name="com.arts.m3droid.samatravel.ui.specialOffer.SpecialOffersFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/contact_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <LinearLayout
+            android:id="@+id/contact_container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_62"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -35,33 +44,36 @@
                 style="@style/tv_request_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="@dimen/dp_4"
                 android:layout_marginEnd="@dimen/dp_16"
                 android:text="@string/txt_contact_us" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/iv_twitter"
                 style="@style/desc_social_media"
                 android:contentDescription="@string/dsc_social_media"
                 android:src="@drawable/twitter_icon" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/iv_fb"
                 style="@style/desc_social_media"
                 android:contentDescription="@string/dsc_social_media"
                 android:src="@drawable/fb_icon" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/iv_instagram"
                 style="@style/desc_social_media"
                 android:contentDescription="@string/dsc_social_media"
                 android:src="@drawable/instagram_icon" />
 
             <ImageView
+                android:id="@+id/iv_snap"
                 style="@style/desc_social_media"
                 android:contentDescription="@string/dsc_social_media"
                 android:src="@drawable/snapchat_icon" />
         </LinearLayout>
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <!--menu-->
     <com.mxn.soul.flowingdrawer_core.FlowingMenuLayout

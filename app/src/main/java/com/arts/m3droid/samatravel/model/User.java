@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class User implements Parcelable {
 
     private String uid, name, number, email;
-    private String doneOffers, goingOffers;
+    private String doneOffers, goingOnOffers;
 
     public User() {
     }
@@ -18,12 +18,20 @@ public class User implements Parcelable {
         this.email = email;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     public void setDoneOffers(String doneOffers) {
         this.doneOffers = doneOffers;
     }
 
-    public void setGoingOffers(String goingOffers) {
-        this.goingOffers = goingOffers;
+    public void setGoingOnOffers(String goingOffers) {
+        this.goingOnOffers = goingOffers;
     }
 
     public String getUid() {
@@ -46,8 +54,8 @@ public class User implements Parcelable {
         return doneOffers;
     }
 
-    public String getGoingOffers() {
-        return goingOffers;
+    public String getGoingOnOffers() {
+        return goingOnOffers;
     }
 
     @Override
@@ -62,7 +70,7 @@ public class User implements Parcelable {
         dest.writeString(this.number);
         dest.writeString(this.email);
         dest.writeString(this.doneOffers);
-        dest.writeString(this.goingOffers);
+        dest.writeString(this.goingOnOffers);
     }
 
     protected User(Parcel in) {
@@ -71,10 +79,10 @@ public class User implements Parcelable {
         this.number = in.readString();
         this.email = in.readString();
         this.doneOffers = in.readString();
-        this.goingOffers = in.readString();
+        this.goingOnOffers = in.readString();
     }
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel source) {
             return new User(source);

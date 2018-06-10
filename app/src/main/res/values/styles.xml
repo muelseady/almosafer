@@ -87,7 +87,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:background">#A0AFE8</item>
+        <item name="android:windowBackground">@drawable/main_background</item>
     </style>
 
 </resources>

@@ -16,6 +16,9 @@ public class SpecialOfferRequest implements Parcelable {
     private int adults, children, infants, over65;
     private String empPriKey;
 
+    public SpecialOfferRequest() {
+    }
+
     public SpecialOfferRequest(String name, String number, String dateFrom, String dateTo, String userId,
                                int adults, int children, int infants, int over65, String notes,
                                String offerName) {

@@ -105,9 +105,7 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
         if (actionBar == null) return;
 
         actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setDisplayShowTitleEnabled(true);
-
-        actionBar.setTitle(specialOffer.getName());
+        actionBar.setDisplayShowTitleEnabled(false);
     }
 
 

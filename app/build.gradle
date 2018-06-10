@@ -9,6 +9,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "en" // And any other languages you support
+//        resConfigs "ar" // And any other languages you support
     }
     buildTypes {
         release {
@@ -30,16 +32,21 @@ dependencies {
     implementation 'com.android.support:customtabs:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:support-compat:27.1.1'
-
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation 'com.facebook.android:facebook-login:4.33.0' //Fb and twitter login dependencies
+    implementation('com.twitter.sdk.android:twitter:3.3.0@aar') {
+        transitive = true
+    }
+
+
+    implementation 'com.google.firebase:firebase-database:16.0.1' //Firebase dependencies
     implementation 'com.google.firebase:firebase-auth:16.0.1'
-    implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
+    implementation 'com.firebaseui:firebase-ui-auth:4.0.1'
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
 
