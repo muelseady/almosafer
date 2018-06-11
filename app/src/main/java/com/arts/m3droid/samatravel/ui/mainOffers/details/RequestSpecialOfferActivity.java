@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class RequestSpecialOfferActivity extends AppCompatActivity implements DatePicker.OnDatePickerDialogSet {
 
@@ -71,8 +70,6 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
 
         specialOffer = getIntent().getParcelableExtra(Constants.DATA_SPECIAL_OFFER);
         user = getIntent().getParcelableExtra(Constants.NODE_USERS);
-        Timber.d("number %s", user.getNumber());
-        Timber.d("name %s", user.getName());
         extractUserName(user.getName());
         extractUserNumber(user.getNumber());
 
@@ -150,28 +147,30 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
         if (Validator.validateETHasError(etFirstName, etSecondName, etThirdName,
                 etDateFrom, etDateTo,
                 etNumber)) {
-
-            //Doing empty push to be able to store the key to add it later to user node
-            reqSpecialOfferRef = reqSpecialOfferRef.push();
-            String requestOfferKey = reqSpecialOfferRef.getKey();
-
-            reqSpecialOfferRef.setValue(specialOfferRequest); // push the filled specialOffer
-
-            //Populate the existing user with the new name and number to update his data
-            user.setName(extractTrimmedString(etFirstName) + " " +
-                    extractTrimmedString(etSecondName) + " "
-                    + extractTrimmedString(etThirdName));
-            user.setNumber(etNumber.getText().toString());
-
-            //Push the updated data and the offer key to be in the user node
-            userReference.child(user.getUid()).setValue(user);
-            user.setGoingOnOffers(requestOfferKey); // add the offer key to be in the user node
-            userReference.child(user.getUid()).child(Constants.NODE_GOINGON_OFFERS).push().setValue(requestOfferKey);
-
-            Toast.makeText(getApplicationContext(), R.string.txt_offer_delivered, Toast.LENGTH_LONG).show();
-            finish();
+            pushTheValidatedData(specialOfferRequest);
         }
+    }
 
+    private void pushTheValidatedData(SpecialOfferRequest specialOfferRequest) {
+        //Doing empty push to be able to store the key to add it later to user node
+        reqSpecialOfferRef = reqSpecialOfferRef.push();
+        String requestOfferKey = reqSpecialOfferRef.getKey();
+
+        reqSpecialOfferRef.setValue(specialOfferRequest); // push the filled specialOffer
+
+        //Populate the existing user with the new name and number to update his data
+        user.setName(extractTrimmedString(etFirstName) + " " +
+                extractTrimmedString(etSecondName) + " "
+                + extractTrimmedString(etThirdName));
+        user.setNumber(etNumber.getText().toString());
+
+        //Push the updated data and the offer key to be in the user node
+        userReference.child(user.getUid()).setValue(user);
+        user.setGoingOnOffers(requestOfferKey); // add the offer key to be in the user node
+        userReference.child(user.getUid()).child(Constants.NODE_GOINGON_OFFERS).push().setValue(requestOfferKey);
+
+        Toast.makeText(getApplicationContext(), R.string.txt_offer_delivered, Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @NonNull

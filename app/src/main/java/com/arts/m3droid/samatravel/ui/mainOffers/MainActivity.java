@@ -145,16 +145,18 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         }
         user = new User(userKey, userName, userNumber, userEmail);
 
-        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 boolean userAlreadyThere = false;
+                DataSnapshot currentUserSnap = null;
 
                 for (DataSnapshot userDataSnapShot : dataSnapshot.getChildren()) {
                     if (userKey.equals(userDataSnapShot.getKey())) {
                         //Checks if the key is in children if not add it as new user if there add nothing
                         userAlreadyThere = true;
+                        currentUserSnap = userDataSnapShot;
                         break;
                     }
                 }
@@ -167,6 +169,9 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
                 //                       |- "imageUrl"
                 if (!userAlreadyThere)
                     userReference.child(userKey).setValue(user);
+                else {
+                    user = currentUserSnap.getValue(User.class);
+                }
             }
 
             @Override
