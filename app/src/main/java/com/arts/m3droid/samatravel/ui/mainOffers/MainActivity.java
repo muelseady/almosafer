@@ -108,7 +108,11 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
 
         //Side drawer tv listeners
         tvCustomOffer.setOnClickListener(v -> startAnotherActivity(CustomOffersActivity.class));
-        tvHistory.setOnClickListener(v -> startAnotherActivity(HistoryActivity.class));
+        tvHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(this, HistoryActivity.class);
+            intent.putExtra(Constants.NODE_USERS, user);
+            startActivity(intent);
+        });
         tvCallUs.setOnClickListener(v -> startAnotherActivity(CallUsActivity.class));
         signOut.setOnClickListener(v -> performSignOut()); // Sign out from Auth as simple as that
     }

@@ -44,4 +44,5 @@
 
     <string name="twitter_consumer_key" translatable="false">fERj7n8gX5UGy7FcXDnb5NSjP</string>
     <string name="twitter_consumer_secret" translatable="false">s18xM6PrG1HVaYbMLmTjaBY4gB9nOZVSsC1fkpLGha5mLjZgFv</string>
+    <string name="background">background</string>
 </resources>

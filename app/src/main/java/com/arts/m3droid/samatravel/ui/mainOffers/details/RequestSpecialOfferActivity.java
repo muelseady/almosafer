@@ -165,9 +165,12 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
         user.setNumber(etNumber.getText().toString());
 
         //Push the updated data and the offer key to be in the user node
-        userReference.child(user.getUid()).setValue(user);
-        user.setGoingOnOffers(requestOfferKey); // add the offer key to be in the user node
-        userReference.child(user.getUid()).child(Constants.NODE_GOINGON_OFFERS).push().setValue(requestOfferKey);
+        DatabaseReference currentUserRef = userReference.child(user.getUid());
+        currentUserRef.child("name").setValue(user.getName());
+        currentUserRef.child("number").setValue(user.getNumber());
+
+        DatabaseReference currentUserGoingOffersRef = currentUserRef.child(Constants.NODE_GOINGON_OFFERS);
+        currentUserGoingOffersRef.push().setValue(requestOfferKey);
 
         Toast.makeText(getApplicationContext(), R.string.txt_offer_delivered, Toast.LENGTH_LONG).show();
         finish();

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    app:edMenuBackground="#FFFF"
+    app:edMenuBackground="#EEEEEE"
     app:edMenuSize="260dp"
     app:edPosition="2">
 
@@ -14,7 +14,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@drawable/background"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
@@ -23,8 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/contact_container"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,11 +33,11 @@
             android:id="@+id/contact_container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_62"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/tv_contacts"
@@ -45,9 +45,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingBottom="@dimen/dp_4"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:text="@string/txt_contact_us" />
+                android:paddingBottom="@dimen/dp_4"
+                android:text="@string/txt_contact_us"
+                android:textColor="@android:color/white" />
 
             <ImageView
                 android:id="@+id/iv_twitter"
@@ -122,13 +123,6 @@
                     style="@style/drawer_text"
                     android:drawableStart="@drawable/drawer_call_icon"
                     android:text="@string/txt_call_us" />
-
-                <TextView
-                    android:id="@+id/tv_share"
-                    style="@style/drawer_text"
-                    android:drawableStart="@drawable/drawer_share_icon"
-                    android:text="@string/txt_share" />
-
 
                 <View
                     android:layout_width="match_parent"
