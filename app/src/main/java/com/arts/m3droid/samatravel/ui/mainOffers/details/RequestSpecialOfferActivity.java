@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
+import com.arts.m3droid.samatravel.model.RequestedOffers;
 import com.arts.m3droid.samatravel.model.SpecialOffer;
 import com.arts.m3droid.samatravel.model.SpecialOfferRequest;
 import com.arts.m3droid.samatravel.model.User;
@@ -52,11 +53,11 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
     @BindView(R.id.emp_unique_num)
     EditText etEmpNum;
 
-    private DatabaseReference reqSpecialOfferRef =
-            FirebaseFactory.getDatabase().getReference(Constants.NODE_SPECIAL_OFFER_REQUEST);
-
     private DatabaseReference userReference =
             FirebaseFactory.getDatabase().getReference().child(Constants.NODE_USERS);
+
+    private DatabaseReference unAnsweredRequests =
+            FirebaseFactory.getDatabase().getReference().child(Constants.UNANSWERED_OFFERS);
 
     private SpecialOffer specialOffer;
     private User user;
@@ -138,8 +139,8 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
         SpecialOfferRequest specialOfferRequest =
                 new SpecialOfferRequest(name, number,
                         dateFrom, dateTo, user.getUid(),
-                        adults, children, infants, over65,
-                        notes, specialOffer.getName());
+                        adults, children, infants, over65, notes,
+                        specialOffer.getName(), specialOffer.getDetails(), specialOffer.getImageUrl());
         if (etEmpNum.getText() != null)
             specialOfferRequest.setEmpPriKey(etEmpNum.getText().toString().trim());
 
@@ -152,11 +153,6 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
     }
 
     private void pushTheValidatedData(SpecialOfferRequest specialOfferRequest) {
-        //Doing empty push to be able to store the key to add it later to user node
-        reqSpecialOfferRef = reqSpecialOfferRef.push();
-        String requestOfferKey = reqSpecialOfferRef.getKey();
-
-        reqSpecialOfferRef.setValue(specialOfferRequest); // push the filled specialOffer
 
         //Populate the existing user with the new name and number to update his data
         user.setName(extractTrimmedString(etFirstName) + " " +
@@ -169,8 +165,20 @@ public class RequestSpecialOfferActivity extends AppCompatActivity implements Da
         currentUserRef.child("name").setValue(user.getName());
         currentUserRef.child("number").setValue(user.getNumber());
 
-        DatabaseReference currentUserGoingOffersRef = currentUserRef.child(Constants.NODE_GOINGON_OFFERS);
-        currentUserGoingOffersRef.push().setValue(requestOfferKey);
+        DatabaseReference currentUserGoingOffersRef =
+                currentUserRef.child(Constants.NODE_GOINGON_OFFERS).push();
+
+        String requestedOfferId = currentUserGoingOffersRef.getKey();
+        currentUserGoingOffersRef.setValue(specialOfferRequest);
+
+        RequestedOffers requestedOffer =
+                new RequestedOffers(user.getUid(),
+                        requestedOfferId,
+                        specialOffer.getName(),
+                        user.getName(),
+                        specialOffer.getImageUrl());
+
+        unAnsweredRequests.push().setValue(requestedOffer);
 
         Toast.makeText(getApplicationContext(), R.string.txt_offer_delivered, Toast.LENGTH_LONG).show();
         finish();

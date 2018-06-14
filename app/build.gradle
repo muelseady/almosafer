@@ -63,6 +63,7 @@ dependencies {
 
     implementation 'com.github.dmytrodanylyk.android-process-button:library:1.0.4' //processButton
     implementation 'info.hoang8f:fbutton:1.0.5' //FlatButton
+    implementation 'com.github.ceryle:SegmentedButton:v2.0.2' //RadioButton
 
 
     implementation 'com.jakewharton:butterknife:8.8.1' //ButterKnife

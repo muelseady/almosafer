@@ -6,9 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.arts.m3droid.samatravel.R;
-import com.arts.m3droid.samatravel.model.SpecialOffer;
+import com.arts.m3droid.samatravel.model.SpecialOfferRequest;
 import com.arts.m3droid.samatravel.utils.ImageUtils;
 
 import java.util.List;
@@ -18,14 +19,15 @@ import butterknife.ButterKnife;
 
 public class HistoryOffersAdapter extends RecyclerView.Adapter<HistoryOffersAdapter.HistoryViewHolder> {
 
+
     private OnItemClicked clickListener;
-    private List<SpecialOffer> specialOffers;
+    private List<SpecialOfferRequest> specialOffers;
 
     public interface OnItemClicked {
         void onClick(int position);
     }
 
-    HistoryOffersAdapter(List<SpecialOffer> specialOffers, OnItemClicked clickListener) {
+    HistoryOffersAdapter(List<SpecialOfferRequest> specialOffers, OnItemClicked clickListener) {
         this.clickListener = clickListener;
         this.specialOffers = specialOffers;
     }
@@ -42,12 +44,14 @@ public class HistoryOffersAdapter extends RecyclerView.Adapter<HistoryOffersAdap
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        ImageUtils.setImageOnImageView(specialOffers.get(position).getImageUrl(), holder.offerCard);
+        holder.offerName.setText(specialOffers.get(position).getOfferName());
+        ImageUtils.setImageOnImageView(specialOffers.get(position).getOfferImageUrl(), holder.offerCard);
     }
 
 
     @Override
     public int getItemCount() {
+        if (specialOffers == null) return 0;
         return specialOffers.size();
     }
 
@@ -55,6 +59,10 @@ public class HistoryOffersAdapter extends RecyclerView.Adapter<HistoryOffersAdap
 
         @BindView(R.id.iv_offer_card)
         ImageView offerCard;
+        @BindView(R.id.offer_name)
+        TextView offerName;
+        @BindView(R.id.emp_name)
+        TextView empName;
 
         HistoryViewHolder(View itemView) {
             super(itemView);

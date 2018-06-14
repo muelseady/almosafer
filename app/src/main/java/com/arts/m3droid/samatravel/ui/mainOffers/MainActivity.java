@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
 import com.arts.m3droid.samatravel.model.SpecialOffer;
+import com.arts.m3droid.samatravel.model.SpecialOfferRequest;
 import com.arts.m3droid.samatravel.model.User;
 import com.arts.m3droid.samatravel.ui.AuthUIActivity;
 import com.arts.m3droid.samatravel.ui.callUs.CallUsActivity;
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
 
     @BindView(R.id.drawerlayout)
     FlowingDrawer mDrawer;
-
     @BindView(R.id.rv_special_offers)
     RecyclerView rvSpecialOffers;
     @BindView(R.id.tv_custom_offer)
@@ -80,55 +80,29 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+        verifyUserAuth();
+        specialOffers = new ArrayList<>();
+
+
+        mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
+        setUpToolbar();
+        loadSpecialOffers();
+        setUpAnimations();
+
+        setDifferentListeners();
+    }
+
+    //region userAuth
+    private void verifyUserAuth() {
         userReference =
                 FirebaseFactory.getDatabase().getReference(Constants.NODE_USERS);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             startActivity(new Intent(this, AuthUIActivity.class));
             finish();
-            return;
         } else {
             addTheUserDataToDb(currentUser);
         }
-        specialOffers = new ArrayList<>();
-
-
-        mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
-        setUpToolbar();
-        loadData();
-        setUpAnimations();
-
-        setDifferentListeners();
-    }
-
-    private void setDifferentListeners() {
-        //Social media icons listeners
-        ivFb.setOnClickListener(v -> handleFb(this));
-        ivTwitter.setOnClickListener(v -> handleTwitter(this));
-
-        //Side drawer tv listeners
-        tvCustomOffer.setOnClickListener(v -> startAnotherActivity(CustomOffersActivity.class));
-        tvHistory.setOnClickListener(v -> {
-            Intent intent = new Intent(this, HistoryActivity.class);
-            intent.putExtra(Constants.NODE_USERS, user);
-            startActivity(intent);
-        });
-        tvCallUs.setOnClickListener(v -> startAnotherActivity(CallUsActivity.class));
-        signOut.setOnClickListener(v -> performSignOut()); // Sign out from Auth as simple as that
-    }
-
-    private void performSignOut() {
-
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        startActivity(new Intent(this, AuthUIActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(this, R.string.txt_error_signOut, Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     /**
@@ -164,17 +138,34 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
                         break;
                     }
                 }
-                // To uniquely store the user once with no duplication , Store the user
-                // unique id as a key in the node then store the name and the location of
-                // the image url as values to this key
-                //  /"users"-
-                //           |- "userId"-
-                //                       |- "userName"
-                //                       |- "imageUrl"
+
                 if (!userAlreadyThere)
+                    // To uniquely store the user once with no duplication , Store the user
+                    // unique id as a key in the node then store the name and the location of
+                    // the image url as values to this key
+                    //  /"users"-
+                    //           |- "userId"-
+                    //                       |- "userName"
+                    //                       |- "imageUrl"
                     userReference.child(userKey).setValue(user);
+
                 else {
                     user = currentUserSnap.getValue(User.class);
+
+                    userReference.child(userKey).child(Constants.NODE_GOINGON_OFFERS).
+                            addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
+                                        user.setDoneOffers(goinOffersSnap.getValue(SpecialOfferRequest.class));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                 }
             }
 
@@ -185,15 +176,10 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         });
 
     }
+    //endregion
 
-
-    private void setUpAnimations() {
-        YoYo.with(Techniques.Landing)
-                .duration(2000)
-                .playOn(rvSpecialOffers);
-    }
-
-    private void loadData() {
+    //region specialOffersRetrieve
+    private void loadSpecialOffers() {
         DatabaseReference specialOfferReference =
                 FirebaseFactory.getDatabase().getReference().child(Constants.NODE_SPECIAL_OFFERS);
 
@@ -230,23 +216,40 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
 
     private void setUpRecyclerView() {
         rvSpecialOffers.setHasFixedSize(true);
-        rvSpecialOffers.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        rvSpecialOffers.setLayoutManager(layoutManager);
         rvSpecialOffers.setAdapter(new SpecialOffersAdapter(specialOffers, this));
+    }
+    //endregion
+
+    private void setDifferentListeners() {
+        //Social media icons listeners
+        ivFb.setOnClickListener(v -> handleFb(this));
+        ivTwitter.setOnClickListener(v -> handleTwitter(this));
+
+        //Side drawer tv listeners
+        tvCustomOffer.setOnClickListener(v -> startAnotherActivity(CustomOffersActivity.class));
+        tvHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(this, HistoryActivity.class);
+            intent.putExtra(Constants.NODE_USERS, user);
+            startActivity(intent);
+        });
+        tvCallUs.setOnClickListener(v -> startAnotherActivity(CallUsActivity.class));
+        signOut.setOnClickListener(v -> performSignOut()); // Sign out from Auth as simple as that
+    }
+
+
+    private void setUpAnimations() {
+        YoYo.with(Techniques.Landing)
+                .duration(2000)
+                .playOn(rvSpecialOffers);
     }
 
     void startAnotherActivity(Class activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
-    }
-
-    void setUpToolbar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar == null) return;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-
-        actionBar.setTitle(getString(R.string.txt_special_offer));
-        actionBar.setHomeAsUpIndicator(R.drawable.menu_drawer_icon);
     }
 
     @Override
@@ -263,5 +266,29 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         intent.putExtra(Constants.NODE_USERS, user);
 
         startActivity(intent);
+    }
+
+    void setUpToolbar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) return;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+
+        actionBar.setTitle(getString(R.string.txt_special_offer));
+        actionBar.setHomeAsUpIndicator(R.drawable.menu_drawer_icon);
+    }
+
+    private void performSignOut() {
+
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        startActivity(new Intent(this, AuthUIActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(this, R.string.txt_error_signOut, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

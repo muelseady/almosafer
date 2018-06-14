@@ -3,10 +3,14 @@ package com.arts.m3droid.samatravel.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User implements Parcelable {
 
     private String uid, name, number, email;
-    private String doneOffers, goingOnOffers;
+
+    private List<SpecialOfferRequest> userSpecialOffersRequest;
 
     public User() {
     }
@@ -26,13 +30,16 @@ public class User implements Parcelable {
         this.number = number;
     }
 
-    public void setDoneOffers(String doneOffers) {
-        this.doneOffers = doneOffers;
+    public void setDoneOffers(SpecialOfferRequest doneOffers) {
+        if (userSpecialOffersRequest == null) {
+            userSpecialOffersRequest = new ArrayList<>();
+        }
+        userSpecialOffersRequest.add(doneOffers);
     }
 
-    public void setGoingOnOffers(String goingOffers) {
-        this.goingOnOffers = goingOffers;
-    }
+//    public void setGoingOnOffers(String goingOffers) {
+//        this.goingOnOffers = goingOffers;
+//    }
 
     public String getUid() {
         return uid;
@@ -50,13 +57,14 @@ public class User implements Parcelable {
         return email;
     }
 
-    public String getDoneOffers() {
-        return doneOffers;
+    public List<SpecialOfferRequest> getDoneOffers() {
+        return userSpecialOffersRequest;
     }
+//
+//    public String getGoingOnOffers() {
+//        return goingOnOffers;
+//    }
 
-    public String getGoingOnOffers() {
-        return goingOnOffers;
-    }
 
     @Override
     public int describeContents() {
@@ -69,8 +77,7 @@ public class User implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.number);
         dest.writeString(this.email);
-        dest.writeString(this.doneOffers);
-        dest.writeString(this.goingOnOffers);
+        dest.writeTypedList(this.userSpecialOffersRequest);
     }
 
     protected User(Parcel in) {
@@ -78,8 +85,7 @@ public class User implements Parcelable {
         this.name = in.readString();
         this.number = in.readString();
         this.email = in.readString();
-        this.doneOffers = in.readString();
-        this.goingOnOffers = in.readString();
+        this.userSpecialOffersRequest = in.createTypedArrayList(SpecialOfferRequest.CREATOR);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

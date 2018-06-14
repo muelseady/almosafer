@@ -45,4 +45,9 @@
     <string name="twitter_consumer_key" translatable="false">fERj7n8gX5UGy7FcXDnb5NSjP</string>
     <string name="twitter_consumer_secret" translatable="false">s18xM6PrG1HVaYbMLmTjaBY4gB9nOZVSsC1fkpLGha5mLjZgFv</string>
     <string name="background">background</string>
+    <string name="txt_targeted_place">الوجهه السياحيه</string>
+    <string name="txt_from_place">من</string>
+    <string name="txt_to_place">ألي</string>
+    <string name="txt_travel_tourism">برنامج سياحي مع طيران</string>
+    <string name="txt_tourism_only">برنامج سياحي فقط</string>
 </resources>

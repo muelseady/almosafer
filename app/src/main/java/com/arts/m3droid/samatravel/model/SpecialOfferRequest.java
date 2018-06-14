@@ -7,48 +7,60 @@ public class SpecialOfferRequest implements Parcelable {
 
     // will contain user id and employee id, the employee id must be checked before anything
     //because only one employee must be involved within one offer
-    private String name;
-    private String number;
+    private String userName;
+    private String userNumber;
     private String userId;
-    private String notes;
+    private String userNotes;
     private String offerName;
     private String dateFrom, dateTo;
     private int adults, children, infants, over65;
     private String empPriKey;
+    private String offerDetails, offerImageUrl;
 
     public SpecialOfferRequest() {
+        //Many functions require empty constructor
     }
 
     public SpecialOfferRequest(String name, String number, String dateFrom, String dateTo, String userId,
                                int adults, int children, int infants, int over65, String notes,
-                               String offerName) {
-        this.name = name;
+                               String offerName, String offerDetails, String offerImageUrl) {
+        this.userName = name;
         this.userId = userId;
-        this.notes = notes;
+        this.userNotes = notes;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.number = number;
+        this.userNumber = number;
         this.adults = adults;
         this.children = children;
         this.infants = infants;
         this.over65 = over65;
         this.offerName = offerName;
+        this.offerDetails = offerDetails;
+        this.offerImageUrl = offerImageUrl;
     }
 
     public void setEmpPriKey(String empPriKey) {
         this.empPriKey = empPriKey;
     }
 
-    public String getEmpPriKey() {
-        return empPriKey;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getName() {
-        return name;
+    public String getUserNumber() {
+        return userNumber;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUserNotes() {
+        return userNotes;
+    }
+
+    public String getOfferName() {
+        return offerName;
     }
 
     public String getDateFrom() {
@@ -59,16 +71,8 @@ public class SpecialOfferRequest implements Parcelable {
         return dateTo;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
     public int getAdults() {
         return adults;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 
     public int getChildren() {
@@ -83,10 +87,17 @@ public class SpecialOfferRequest implements Parcelable {
         return over65;
     }
 
-    public String getOfferName() {
-        return offerName;
+    public String getEmpPriKey() {
+        return empPriKey;
     }
 
+    public String getOfferDetails() {
+        return offerDetails;
+    }
+
+    public String getOfferImageUrl() {
+        return offerImageUrl;
+    }
 
     @Override
     public int describeContents() {
@@ -95,10 +106,10 @@ public class SpecialOfferRequest implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.number);
+        dest.writeString(this.userName);
+        dest.writeString(this.userNumber);
         dest.writeString(this.userId);
-        dest.writeString(this.notes);
+        dest.writeString(this.userNotes);
         dest.writeString(this.offerName);
         dest.writeString(this.dateFrom);
         dest.writeString(this.dateTo);
@@ -107,13 +118,15 @@ public class SpecialOfferRequest implements Parcelable {
         dest.writeInt(this.infants);
         dest.writeInt(this.over65);
         dest.writeString(this.empPriKey);
+        dest.writeString(this.offerDetails);
+        dest.writeString(this.offerImageUrl);
     }
 
     protected SpecialOfferRequest(Parcel in) {
-        this.name = in.readString();
-        this.number = in.readString();
+        this.userName = in.readString();
+        this.userNumber = in.readString();
         this.userId = in.readString();
-        this.notes = in.readString();
+        this.userNotes = in.readString();
         this.offerName = in.readString();
         this.dateFrom = in.readString();
         this.dateTo = in.readString();
@@ -122,6 +135,8 @@ public class SpecialOfferRequest implements Parcelable {
         this.infants = in.readInt();
         this.over65 = in.readInt();
         this.empPriKey = in.readString();
+        this.offerDetails = in.readString();
+        this.offerImageUrl = in.readString();
     }
 
     public static final Creator<SpecialOfferRequest> CREATOR = new Creator<SpecialOfferRequest>() {
