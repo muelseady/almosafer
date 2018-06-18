@@ -15,26 +15,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!--<style name="MainActivityTheme" parent="AppTheme">-->
-    <!--&lt;!&ndash; enable window content transitions &ndash;&gt;-->
-    <!--<item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>-->
-
-    <!--&lt;!&ndash; specify enter and exit transitions &ndash;&gt;-->
-    <!--<item name="android:windowEnterTransition" tools:targetApi="lollipop">@transition/explode</item>-->
-
-    <!--&lt;!&ndash; specify shared element transitions &ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="android:windowSharedElementEnterTransition">&ndash;&gt;-->
-    <!--&lt;!&ndash;@transition/change_image_transform&ndash;&gt;-->
-    <!--&lt;!&ndash;</item>&ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="android:windowSharedElementExitTransition">&ndash;&gt;-->
-    <!--&lt;!&ndash;@transition/change_image_transform&ndash;&gt;-->
-    <!--&lt;!&ndash;</item>&ndash;&gt;-->
-    <!--</style>-->
 
     <style name="drawer_text" parent="Base.TextAppearance.AppCompat.Medium">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">26dp</item>
+        <item name="android:gravity">center</item>
         <item name="android:drawablePadding">@dimen/dp_8</item>
         <item name="android:paddingEnd">@dimen/dp_8</item>
         <item name="android:paddingStart">@dimen/dp_8</item>
@@ -52,7 +38,14 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:inputType">number</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="et_request_place">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:inputType">textPersonName</item>
         <item name="android:textSize">@dimen/sp_16</item>
     </style>
 
@@ -89,6 +82,22 @@
 
         <item name="android:windowBackground">@drawable/background</item>
 
+    </style>
+
+
+    <style name="tv_history_details">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="tv_history_details_main_card">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dp_16</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/sp_16</item>
     </style>
 
 </resources>

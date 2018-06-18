@@ -1,7 +1,7 @@
 package com.arts.m3droid.samatravel.model;
 
+import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 
 public class SpecialOffer implements Parcelable {
@@ -10,11 +10,18 @@ public class SpecialOffer implements Parcelable {
     public SpecialOffer() {
     }
 
-    public SpecialOffer(String uid, String name, String imageUrl, String details) {
-        this.uid = uid;
+    public SpecialOffer(String name, String imageUrl, String details) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.details = details;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUid() {
@@ -33,30 +40,30 @@ public class SpecialOffer implements Parcelable {
         return details;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(android.os.Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.uid);
         dest.writeString(this.name);
         dest.writeString(this.imageUrl);
         dest.writeString(this.details);
     }
 
-    protected SpecialOffer(android.os.Parcel in) {
+    protected SpecialOffer(Parcel in) {
         this.uid = in.readString();
         this.name = in.readString();
         this.imageUrl = in.readString();
         this.details = in.readString();
     }
 
-    public static final Parcelable.Creator<SpecialOffer> CREATOR = new Parcelable.Creator<SpecialOffer>() {
-        @NonNull
+    public static final Creator<SpecialOffer> CREATOR = new Creator<SpecialOffer>() {
         @Override
-        public SpecialOffer createFromParcel(android.os.Parcel source) {
+        public SpecialOffer createFromParcel(Parcel source) {
             return new SpecialOffer(source);
         }
 

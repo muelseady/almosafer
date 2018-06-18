@@ -4,6 +4,7 @@
     package="com.arts.m3droid.samatravel">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".SamaApp"
@@ -23,11 +24,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.customOffers.CustomOffersActivity"
-            android:parentActivityName=".ui.mainOffers.MainActivity" />
-        <activity
             android:name=".ui.userHistory.HistoryActivity"
             android:configChanges="orientation|screenSize|keyboard"
+            android:launchMode="singleTop"
             android:parentActivityName=".ui.mainOffers.MainActivity" />
         <activity
             android:name=".ui.callUs.CallUsActivity"
@@ -38,11 +37,11 @@
             android:parentActivityName=".ui.mainOffers.MainActivity"
             android:theme="@style/NoActionTheme" />
         <activity
-            android:name=".ui.mainOffers.details.RequestSpecialOfferActivity"
+            android:name=".ui.mainOffers.details.RequestOfferActivity"
             android:parentActivityName=".ui.mainOffers.details.SpecialOffersDetailsActivity" />
         <activity
             android:name=".ui.AuthUIActivity"
-          android:screenOrientation="userPortrait"/>
+            android:screenOrientation="userPortrait" />
 
 
         <meta-data
@@ -66,7 +65,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.userHistory.historyDetails.historyOffersDetails" />
+        <activity
+            android:name=".ui.userHistory.historyDetails.HistoryOfferDetails"
+            android:parentActivityName=".ui.userHistory.HistoryActivity" />
     </application>
 
 </manifest>

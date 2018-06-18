@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,12 +16,12 @@ import android.widget.Toast;
 
 import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
+import com.arts.m3droid.samatravel.model.RequestingOfferDetails;
 import com.arts.m3droid.samatravel.model.SpecialOffer;
-import com.arts.m3droid.samatravel.model.SpecialOfferRequest;
 import com.arts.m3droid.samatravel.model.User;
 import com.arts.m3droid.samatravel.ui.AuthUIActivity;
 import com.arts.m3droid.samatravel.ui.callUs.CallUsActivity;
-import com.arts.m3droid.samatravel.ui.customOffers.CustomOffersActivity;
+import com.arts.m3droid.samatravel.ui.mainOffers.details.RequestOfferActivity;
 import com.arts.m3droid.samatravel.ui.mainOffers.details.SpecialOffersDetailsActivity;
 import com.arts.m3droid.samatravel.ui.userHistory.HistoryActivity;
 import com.arts.m3droid.samatravel.utils.FirebaseFactory;
@@ -42,11 +43,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleFb;
+import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleInsta;
+import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleSnap;
 import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleTwitter;
 
-public class MainActivity extends AppCompatActivity implements SpecialOffersAdapter.OnItemClicked {
+public class MainActivity extends AppCompatActivity
+        implements OffersAdapter.OnItemClicked, OffersAdapter.OnFavButtonClicked {
 
     @BindView(R.id.drawerlayout)
     FlowingDrawer mDrawer;
@@ -70,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
     ImageView ivSnap;
 
     private User user;
+    private String userKey;
+    private OffersAdapter adapter;
 
     private DatabaseReference userReference;
     private List<SpecialOffer> specialOffers;
@@ -81,14 +88,13 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
 
         ButterKnife.bind(this);
         verifyUserAuth();
-        specialOffers = new ArrayList<>();
 
+        if (specialOffers == null)
+            specialOffers = new ArrayList<>();
 
         mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
         setUpToolbar();
-        loadSpecialOffers();
         setUpAnimations();
-
         setDifferentListeners();
     }
 
@@ -110,8 +116,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
      *                 Object and send it to the database
      */
     private void addTheUserDataToDb(FirebaseUser authUser) {
-
-        String userKey = authUser.getUid();
+        userKey = authUser.getUid();
         String userName = authUser.getDisplayName();
         String userNumber = null;
         String userEmail = null;
@@ -122,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
             userEmail = authUser.getEmail();
         }
         user = new User(userKey, userName, userNumber, userEmail);
+
+        loadSpecialOffers();
 
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -147,17 +154,31 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
                     //           |- "userId"-
                     //                       |- "userName"
                     //                       |- "imageUrl"
-                    userReference.child(userKey).setValue(user);
 
+                    userReference.child(userKey).setValue(user);
                 else {
                     user = currentUserSnap.getValue(User.class);
-
                     userReference.child(userKey).child(Constants.NODE_GOINGON_OFFERS).
                             addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
-                                        user.setDoneOffers(goinOffersSnap.getValue(SpecialOfferRequest.class));
+                                        user.setGoingOnOffers(goinOffersSnap.getValue(RequestingOfferDetails.class));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                    userReference.child(userKey).child(Constants.FAV_OFFERS).
+                            addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
+                                        user.setFavOffers(goinOffersSnap.getValue(String.class));
                                     }
                                 }
 
@@ -176,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         });
 
     }
+
     //endregion
 
     //region specialOffersRetrieve
@@ -190,6 +212,8 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
                 SpecialOffer specialOffer = dataSnapshot.getValue(SpecialOffer.class);
                 specialOffers.add(specialOffer);
                 setUpRecyclerView();
+                if (specialOffer == null) return;
+                specialOffer.setUid(dataSnapshot.getKey());
             }
 
             @Override
@@ -220,7 +244,12 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         rvSpecialOffers.setLayoutManager(layoutManager);
-        rvSpecialOffers.setAdapter(new SpecialOffersAdapter(specialOffers, this));
+        adapter = new OffersAdapter(specialOffers,
+                this,
+                this,
+                this,
+                user.getFavoritedOffers());
+        rvSpecialOffers.setAdapter(adapter);
     }
     //endregion
 
@@ -228,15 +257,25 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         //Social media icons listeners
         ivFb.setOnClickListener(v -> handleFb(this));
         ivTwitter.setOnClickListener(v -> handleTwitter(this));
+        ivInstagram.setOnClickListener(v -> handleInsta(this));
+        ivSnap.setOnClickListener(v -> handleSnap(this));
 
         //Side drawer tv listeners
-        tvCustomOffer.setOnClickListener(v -> startAnotherActivity(CustomOffersActivity.class));
+        tvCustomOffer.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RequestOfferActivity.class);
+            intent.putExtra(Constants.NODE_USERS, user);
+            intent.putExtra(Constants.NODE_SPECIAL_OFFERS, Constants.NODE_CUSTOM_OFFER);
+            startActivity(intent);
+        });
         tvHistory.setOnClickListener(v -> {
             Intent intent = new Intent(this, HistoryActivity.class);
             intent.putExtra(Constants.NODE_USERS, user);
             startActivity(intent);
         });
-        tvCallUs.setOnClickListener(v -> startAnotherActivity(CallUsActivity.class));
+        tvCallUs.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CallUsActivity.class);
+            startActivity(intent);
+        });
         signOut.setOnClickListener(v -> performSignOut()); // Sign out from Auth as simple as that
     }
 
@@ -247,10 +286,6 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
                 .playOn(rvSpecialOffers);
     }
 
-    void startAnotherActivity(Class activity) {
-        Intent intent = new Intent(this, activity);
-        startActivity(intent);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -264,7 +299,6 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
         Intent intent = new Intent(this, SpecialOffersDetailsActivity.class);
         intent.putExtra(Constants.DATA_SPECIAL_OFFER, specialOffers.get(position));
         intent.putExtra(Constants.NODE_USERS, user);
-
         startActivity(intent);
     }
 
@@ -291,4 +325,29 @@ public class MainActivity extends AppCompatActivity implements SpecialOffersAdap
                     }
                 });
     }
+
+    @Override
+    public void onFavClicked(int position, ImageView view) {
+        String currentOfferUID = specialOffers.get(position).getUid();
+        List<String> offers = user.getFavoritedOffers();
+
+        Timber.d("current offer uid " + currentOfferUID);
+        if (offers != null) {
+            Timber.d("offers != null " + (offers != null));
+
+            for (String offer : offers) {
+                Timber.d("offer " + offer);
+                if (offer.equals(currentOfferUID)) {
+                    view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fav_icon));
+                    userReference.child(userKey).child(Constants.FAV_OFFERS).push().setValue(currentOfferUID);
+                } else {
+                    view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.unfav_icon));
+                }
+            }
+        } else {
+            Timber.d("pushing new child ");
+            userReference.child(userKey).child(Constants.FAV_OFFERS).push().setValue(currentOfferUID);
+        }
+    }
+
 }

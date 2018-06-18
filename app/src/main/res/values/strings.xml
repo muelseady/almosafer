@@ -48,6 +48,9 @@
     <string name="txt_targeted_place">الوجهه السياحيه</string>
     <string name="txt_from_place">من</string>
     <string name="txt_to_place">ألي</string>
-    <string name="txt_travel_tourism">برنامج سياحي مع طيران</string>
-    <string name="txt_tourism_only">برنامج سياحي فقط</string>
+    <string name="txt_destenation">وجهه السفر</string>
+    <string name="txt_budget_req">الميزانيه</string>
+    <string name="choose_what_you_like">برجاء اختيار ماتفضل بين</string>
+    <string name="txt_offer_details">تفاصيل الطلب</string>
+
 </resources>

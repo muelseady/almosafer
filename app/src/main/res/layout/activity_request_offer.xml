@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/dp_8">
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -19,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/dp_8"
-            android:drawableStart="@drawable/req_alarm_icon"
+            android:drawableStart="@drawable/req_alarm"
             android:text="@string/txt_notifi_message"
             android:textColor="@android:color/black"
             android:textSize="@dimen/sp_16" />
@@ -59,7 +58,6 @@
             android:hint="@string/txt_number"
             android:inputType="number" />
 
-
         <TextView
             style="@style/tv_request_main"
             android:text="@string/txt_appropriate_date" />
@@ -79,29 +77,6 @@
                 android:id="@+id/et_date_to"
                 style="@style/et_date_req"
                 android:hint="@string/txt_date_to" />
-        </LinearLayout>
-
-        <TextView
-            style="@style/tv_request_main"
-            android:text="@string/txt_targeted_place" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/et_place_from"
-                style="@style/et_date_req"
-                android:hint="@string/txt_from_place"
-                android:inputType="text"
-                tools:ignore="KeyboardInaccessibleWidget" />
-
-            <EditText
-                android:id="@+id/et_place_to"
-                style="@style/et_date_req"
-                android:hint="@string/txt_to_place"
-                android:inputType="text" />
         </LinearLayout>
 
         <TextView
@@ -142,43 +117,101 @@
                 android:hint="@string/txt_infant" />
         </LinearLayout>
 
-        <TextView
-            style="@style/tv_request_main"
-            android:text="برجاء اختيار ماتفضل بين" />
-
-        <co.ceryle.segmentedbutton.SegmentedButtonGroup
+        <LinearLayout
+            android:id="@+id/custom_data_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical"
-            app:sbg_animateSelector="bounce"
-            app:sbg_animateSelectorDuration="1000"
-            app:sbg_backgroundColor="@android:color/white"
-            app:sbg_dividerColor="@android:color/darker_gray"
-            app:sbg_dividerPadding="10dp"
-            app:sbg_dividerRadius="10dp"
-            app:sbg_dividerSize="1dp"
-            app:sbg_position="1"
-            app:sbg_radius="2dp"
-            app:sbg_ripple="true"
-            app:sbg_rippleColor="@android:color/darker_gray"
-            app:sbg_selectorColor="@android:color/darker_gray">
+            android:layout_marginTop="@dimen/dp_8"
+            android:orientation="vertical">
 
-            <Button
+            <TextView
+                style="@style/tv_request_main"
+                android:text="@string/txt_destenation" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_place_from"
+                    style="@style/et_request_place"
+                    android:gravity="center"
+                    android:hint="@string/txt_from_place" />
+
+                <EditText
+                    android:id="@+id/et_place_to"
+                    style="@style/et_request_place"
+                    android:gravity="center"
+                    android:hint="@string/txt_to_place" />
+
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/tv_request_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="10dp"
-                android:text="Button 1"
-                android:textAllCaps="false" />
+                android:layout_gravity="center"
+                android:text="@string/choose_what_you_like" />
 
-            <Button
+            <lib.kingja.switchbutton.SwitchMultiButton
+                android:id="@+id/switch_pack"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="10dp"
-                android:text="Button 2"
-                android:textAllCaps="false" />
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_16"
+                android:padding="8dp"
+                app:selectedColor="@color/ligh_background"
+                app:selectedTab="1"
+                app:strokeRadius="5dp"
+                app:strokeWidth="2dp"
+                app:switchTabs="@array/pack_array"
+                app:textSize="16sp" />
 
-        </co.ceryle.segmentedbutton.SegmentedButtonGroup>
+            <lib.kingja.switchbutton.SwitchMultiButton
+                android:id="@+id/switch_hotels"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_4"
+                android:paddingStart="@dimen/dp_4"
+                android:paddingTop="@dimen/dp_8"
+                app:selectedColor="@color/ligh_background"
+                app:selectedTab="1"
+                app:strokeRadius="5dp"
+                app:strokeWidth="2dp"
+                app:switchTabs="@array/hotels"
+                app:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8">
+
+                <EditText
+                    android:id="@+id/et_budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:ems="5"
+                    android:hint="@string/txt_budget_req"
+                    android:inputType="number" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spinner_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:entries="@array/money_array" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -218,6 +251,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/dp_16"
             android:layout_marginTop="@dimen/dp_16"
+            android:background="@color/colorAccent"
             android:minWidth="60dp"
             android:paddingBottom="@dimen/dp_8"
             android:paddingEnd="@dimen/dp_16"
@@ -227,8 +261,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:pb_colorNormal="@color/colorAccent" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 </ScrollView>

@@ -22,6 +22,7 @@
             android:name="com.arts.m3droid.samatravel.ui.specialOffer.SpecialOffersFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_16"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toTopOf="@id/contact_container"
             app:layout_constraintEnd_toEndOf="parent"

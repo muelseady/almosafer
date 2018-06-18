@@ -1,7 +1,7 @@
 package com.arts.m3droid.samatravel.model;
 
-public class RequestedOffers {
-    private String userUID, offerId, offerName, userName, offerImage;
+public class RequestingOffer {
+    private String userUID, offerId, offerName, userName, offerImage, employeeKey;
 
     public String getUserUID() {
         return userUID;
@@ -23,12 +23,17 @@ public class RequestedOffers {
         return offerImage;
     }
 
-    public RequestedOffers(String userUID, String offerId, String offerName, String userName, String offerImage) {
+    public String getEmployeeKey() {
+        return employeeKey;
+    }
+
+    public RequestingOffer(String userUID, String offerId, String offerName, String userName, String offerImage, String empKey) {
         this.userUID = userUID;
         this.offerId = offerId;
         this.offerName = offerName;
         this.userName = userName;
         this.offerImage = offerImage;
+        this.employeeKey = empKey;
     }
 
 }

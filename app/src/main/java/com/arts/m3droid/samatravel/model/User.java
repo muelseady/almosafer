@@ -10,7 +10,8 @@ public class User implements Parcelable {
 
     private String uid, name, number, email;
 
-    private List<SpecialOfferRequest> userSpecialOffersRequest;
+    private List<RequestingOfferDetails> goingOnOffers;
+    private List<String> favoritedOffers;
 
     public User() {
     }
@@ -30,16 +31,19 @@ public class User implements Parcelable {
         this.number = number;
     }
 
-    public void setDoneOffers(SpecialOfferRequest doneOffers) {
-        if (userSpecialOffersRequest == null) {
-            userSpecialOffersRequest = new ArrayList<>();
+    public void setGoingOnOffers(RequestingOfferDetails goingOnOffers) {
+        if (this.goingOnOffers == null) {
+            this.goingOnOffers = new ArrayList<>();
         }
-        userSpecialOffersRequest.add(doneOffers);
+        this.goingOnOffers.add(goingOnOffers);
     }
 
-//    public void setGoingOnOffers(String goingOffers) {
-//        this.goingOnOffers = goingOffers;
-//    }
+    public void setFavOffers(String doneOffers) {
+        if (favoritedOffers == null) {
+            favoritedOffers = new ArrayList<>();
+        }
+        favoritedOffers.add(doneOffers);
+    }
 
     public String getUid() {
         return uid;
@@ -57,13 +61,13 @@ public class User implements Parcelable {
         return email;
     }
 
-    public List<SpecialOfferRequest> getDoneOffers() {
-        return userSpecialOffersRequest;
+    public List<RequestingOfferDetails> getGoinOnOffers() {
+        return goingOnOffers;
     }
-//
-//    public String getGoingOnOffers() {
-//        return goingOnOffers;
-//    }
+
+    public List<String> getFavoritedOffers() {
+        return favoritedOffers;
+    }
 
 
     @Override
@@ -77,7 +81,7 @@ public class User implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.number);
         dest.writeString(this.email);
-        dest.writeTypedList(this.userSpecialOffersRequest);
+        dest.writeTypedList(this.goingOnOffers);
     }
 
     protected User(Parcel in) {
@@ -85,7 +89,7 @@ public class User implements Parcelable {
         this.name = in.readString();
         this.number = in.readString();
         this.email = in.readString();
-        this.userSpecialOffersRequest = in.createTypedArrayList(SpecialOfferRequest.CREATOR);
+        this.goingOnOffers = in.createTypedArrayList(RequestingOfferDetails.CREATOR);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

@@ -1,6 +1,8 @@
 package com.arts.m3droid.samatravel.ui.userHistory;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arts.m3droid.samatravel.R;
-import com.arts.m3droid.samatravel.model.SpecialOfferRequest;
+import com.arts.m3droid.samatravel.model.RequestingOfferDetails;
 import com.arts.m3droid.samatravel.utils.ImageUtils;
 
 import java.util.List;
@@ -21,13 +23,13 @@ public class HistoryOffersAdapter extends RecyclerView.Adapter<HistoryOffersAdap
 
 
     private OnItemClicked clickListener;
-    private List<SpecialOfferRequest> specialOffers;
+    private List<RequestingOfferDetails> specialOffers;
 
     public interface OnItemClicked {
         void onClick(int position);
     }
 
-    HistoryOffersAdapter(List<SpecialOfferRequest> specialOffers, OnItemClicked clickListener) {
+    HistoryOffersAdapter(List<RequestingOfferDetails> specialOffers, OnItemClicked clickListener) {
         this.clickListener = clickListener;
         this.specialOffers = specialOffers;
     }
@@ -44,8 +46,11 @@ public class HistoryOffersAdapter extends RecyclerView.Adapter<HistoryOffersAdap
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
+        Context context = holder.containerCardHistory.getContext();
         holder.offerName.setText(specialOffers.get(position).getOfferName());
         ImageUtils.setImageOnImageView(specialOffers.get(position).getOfferImageUrl(), holder.offerCard);
+        holder.containerCardHistory
+                .setBackgroundColor(context.getResources().getColor(R.color.goingOn_offer_card));
     }
 
 
@@ -63,6 +68,8 @@ public class HistoryOffersAdapter extends RecyclerView.Adapter<HistoryOffersAdap
         TextView offerName;
         @BindView(R.id.emp_name)
         TextView empName;
+        @BindView(R.id.container_card_history)
+        ConstraintLayout containerCardHistory;
 
         HistoryViewHolder(View itemView) {
             super(itemView);

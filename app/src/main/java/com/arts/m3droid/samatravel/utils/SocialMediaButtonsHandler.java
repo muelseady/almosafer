@@ -7,6 +7,7 @@ import android.net.Uri;
 
 public class SocialMediaButtonsHandler {
 
+
     public static void handleFb(Activity activity) {
         String FACEBOOK_URL = "https://www.facebook.com/سما-المسافر-للسفر-والسياحة-518141868537030";
         String FACEBOOK_PAGE_ID = "سما-المسافر-للسفر-والسياحة-518141868537030";
@@ -44,10 +45,31 @@ public class SocialMediaButtonsHandler {
         }
     }
 
-    private void handleSnap() {
+    public static void handleSnap(Activity activity) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("*/*");
+        intent.setPackage("com.snapchat.android");
+        activity.startActivity(Intent.createChooser(intent, "برجاء تثبيت برنامج سناب شات اولا"));
     }
 
-    private void handleInsta() {
+    public static void handleInsta(Activity activity) {
+        String INSTA_PAGE = "https://www.instagram.com/sama_almosafer";
+
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
+        try {
+            if (activity.getPackageManager().getPackageInfo("com.instagram.android", 0) != null) {
+
+                final String username = INSTA_PAGE.substring(INSTA_PAGE.lastIndexOf("/") + 1);
+                // http://stackoverflow.com/questions/21505941/intent-to-open-instagram-user-profile-on-android
+                intent.setData(Uri.parse("http://instagram.com/_u/" + username));
+                intent.setPackage("com.instagram.android");
+                activity.startActivity(intent);
+            }
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        intent.setData(Uri.parse(INSTA_PAGE));
+
+        activity.startActivity(intent);
     }
 
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txt_travel_tourism">برنامج سياحي مع طيران</string>
+    <string name="txt_tourism_only">برنامج سياحي فقط</string>
+
+    <string-array name="pack_array">
+        <item>@string/txt_tourism_only</item>
+        <item>@string/txt_travel_tourism</item>
+    </string-array>
+
+    <string name="txt_hotel_3stars">فندق 3 نجوم</string>
+    <string name="txt_hotel_4stars">4 نجوم</string>
+    <string name="txt_hotel_5stars">5 نجوم</string>
+    <string name="txt_flats">شقق فندقيه</string>
+
+    <string-array name="hotels">
+        <item>@string/txt_flats</item>
+        <item>@string/txt_hotel_5stars</item>
+        <item>@string/txt_hotel_4stars</item>
+        <item>@string/txt_hotel_3stars</item>
+    </string-array>
+
+
+    <string name="txt_ryal">ريال</string>
+    <string name="txt_dollar">دولار</string>
+
+    <string-array name="money_array">
+        <item>@string/txt_ryal</item>
+        <item>@string/txt_dollar</item>
+    </string-array>
+</resources>

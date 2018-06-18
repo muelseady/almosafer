@@ -3,7 +3,7 @@ package com.arts.m3droid.samatravel.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class SpecialOfferRequest implements Parcelable {
+public class RequestingOfferDetails implements Parcelable {
 
     // will contain user id and employee id, the employee id must be checked before anything
     //because only one employee must be involved within one offer
@@ -13,17 +13,27 @@ public class SpecialOfferRequest implements Parcelable {
     private String userNotes;
     private String offerName;
     private String dateFrom, dateTo;
+    private String placeFrom, placeTo;
     private int adults, children, infants, over65;
-    private String empPriKey;
     private String offerDetails, offerImageUrl;
+    private String packages, hotels, budget, budgetCurrency;
+    private int state;
 
-    public SpecialOfferRequest() {
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public RequestingOfferDetails() {
         //Many functions require empty constructor
     }
 
-    public SpecialOfferRequest(String name, String number, String dateFrom, String dateTo, String userId,
-                               int adults, int children, int infants, int over65, String notes,
-                               String offerName, String offerDetails, String offerImageUrl) {
+    public RequestingOfferDetails(String name, String number, String dateFrom, String dateTo, String userId,
+                                  int adults, int children, int infants, int over65, String notes,
+                                  String offerName, String offerDetails, String offerImageUrl) {
         this.userName = name;
         this.userId = userId;
         this.userNotes = notes;
@@ -39,8 +49,36 @@ public class SpecialOfferRequest implements Parcelable {
         this.offerImageUrl = offerImageUrl;
     }
 
-    public void setEmpPriKey(String empPriKey) {
-        this.empPriKey = empPriKey;
+    public RequestingOfferDetails(String userName, String userNumber, String dateFrom, String dateTo, String userId,
+                                  int adults, int children, int infants, int over65, String userNotes,
+                                  String offerName,
+                                  String packages, String hotels, String placeFrom, String placeTo,
+                                  String budget, String budgetCurrency) {
+        this.userName = userName;
+        this.userNumber = userNumber;
+        this.userId = userId;
+        this.userNotes = userNotes;
+        this.offerName = offerName;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.adults = adults;
+        this.children = children;
+        this.infants = infants;
+        this.over65 = over65;
+        this.packages = packages;
+        this.hotels = hotels;
+        this.budget = budget;
+        this.budgetCurrency = budgetCurrency;
+        this.placeFrom = placeFrom;
+        this.placeTo = placeTo;
+    }
+
+    public String getPlaceFrom() {
+        return placeFrom;
+    }
+
+    public String getPlaceTo() {
+        return placeTo;
     }
 
     public String getUserName() {
@@ -87,8 +125,20 @@ public class SpecialOfferRequest implements Parcelable {
         return over65;
     }
 
-    public String getEmpPriKey() {
-        return empPriKey;
+    public String getPackages() {
+        return packages;
+    }
+
+    public String getHotels() {
+        return hotels;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public String getBudgetCurrency() {
+        return budgetCurrency;
     }
 
     public String getOfferDetails() {
@@ -98,6 +148,7 @@ public class SpecialOfferRequest implements Parcelable {
     public String getOfferImageUrl() {
         return offerImageUrl;
     }
+
 
     @Override
     public int describeContents() {
@@ -113,16 +164,22 @@ public class SpecialOfferRequest implements Parcelable {
         dest.writeString(this.offerName);
         dest.writeString(this.dateFrom);
         dest.writeString(this.dateTo);
+        dest.writeString(this.placeFrom);
+        dest.writeString(this.placeTo);
         dest.writeInt(this.adults);
         dest.writeInt(this.children);
         dest.writeInt(this.infants);
         dest.writeInt(this.over65);
-        dest.writeString(this.empPriKey);
         dest.writeString(this.offerDetails);
         dest.writeString(this.offerImageUrl);
+        dest.writeString(this.packages);
+        dest.writeString(this.hotels);
+        dest.writeString(this.budget);
+        dest.writeString(this.budgetCurrency);
+        dest.writeInt(this.state);
     }
 
-    protected SpecialOfferRequest(Parcel in) {
+    protected RequestingOfferDetails(Parcel in) {
         this.userName = in.readString();
         this.userNumber = in.readString();
         this.userId = in.readString();
@@ -130,24 +187,30 @@ public class SpecialOfferRequest implements Parcelable {
         this.offerName = in.readString();
         this.dateFrom = in.readString();
         this.dateTo = in.readString();
+        this.placeFrom = in.readString();
+        this.placeTo = in.readString();
         this.adults = in.readInt();
         this.children = in.readInt();
         this.infants = in.readInt();
         this.over65 = in.readInt();
-        this.empPriKey = in.readString();
         this.offerDetails = in.readString();
         this.offerImageUrl = in.readString();
+        this.packages = in.readString();
+        this.hotels = in.readString();
+        this.budget = in.readString();
+        this.budgetCurrency = in.readString();
+        this.state = in.readInt();
     }
 
-    public static final Creator<SpecialOfferRequest> CREATOR = new Creator<SpecialOfferRequest>() {
+    public static final Creator<RequestingOfferDetails> CREATOR = new Creator<RequestingOfferDetails>() {
         @Override
-        public SpecialOfferRequest createFromParcel(Parcel source) {
-            return new SpecialOfferRequest(source);
+        public RequestingOfferDetails createFromParcel(Parcel source) {
+            return new RequestingOfferDetails(source);
         }
 
         @Override
-        public SpecialOfferRequest[] newArray(int size) {
-            return new SpecialOfferRequest[size];
+        public RequestingOfferDetails[] newArray(int size) {
+            return new RequestingOfferDetails[size];
         }
     };
 }

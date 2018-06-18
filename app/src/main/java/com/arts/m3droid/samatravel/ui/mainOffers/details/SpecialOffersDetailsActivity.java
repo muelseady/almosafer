@@ -25,6 +25,8 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleFb;
+import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleInsta;
+import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleSnap;
 import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleTwitter;
 
 public class SpecialOffersDetailsActivity extends AppCompatActivity {
@@ -72,6 +74,8 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
 
         ivFb.setOnClickListener(v -> handleFb(this));
         ivTwitter.setOnClickListener(v -> handleTwitter(this));
+        ivInstagram.setOnClickListener(v -> handleInsta(this));
+        ivSnap.setOnClickListener(v -> handleSnap(this));
     }
 
     private void setUpAnimations() {
@@ -85,9 +89,10 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
         btnRequestOffer.setText(getResources().getText(R.string.txt_request_offer));
         btnRequestOffer.setProgress(75);
         btnRequestOffer.setOnClickListener(v -> {
-            Intent intent = new Intent(this, RequestSpecialOfferActivity.class);
+            Intent intent = new Intent(this, RequestOfferActivity.class);
             intent.putExtra(Constants.DATA_SPECIAL_OFFER, specialOffer);
             intent.putExtra(Constants.NODE_USERS, user);
+            intent.putExtra(Constants.NODE_SPECIAL_OFFERS, Constants.NODE_SPECIAL_OFFERS);
             startActivity(intent);
         });
     }
