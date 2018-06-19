@@ -22,7 +22,6 @@ import com.dd.processbutton.iml.ActionProcessButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleFb;
 import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handleInsta;
@@ -33,7 +32,6 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.container)
     CoordinatorLayout container;
-
     @BindView(R.id.iv_offer_image)
     ImageView ivSpecialOffer;
     @BindView(R.id.btn_special_offer_request)
@@ -49,11 +47,11 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
     @BindView(R.id.iv_fb)
     ImageView ivFb;
     @BindView(R.id.iv_instagram)
-    ImageView ivInstagram;
+    ImageView ivInsta;
     @BindView(R.id.iv_snap)
     ImageView ivSnap;
     @BindView(R.id.tv_contacts)
-    TextView tvContac;
+    TextView tvContact;
 
     private SpecialOffer specialOffer;
     private User user;
@@ -66,24 +64,22 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_special_offer_details);
         ButterKnife.bind(this);
 
-        Timber.plant(new Timber.DebugTree());
-
         handleReceivedIntent();
         setUpToolbar();
         setUpRequestButton();
         setUpAnimations();
         nestedScrollView.setNestedScrollingEnabled(true);
 
-        tvContac.setTextColor(getResources().getColor(R.color.black));
+        tvContact.setTextColor(getResources().getColor(R.color.black));
         ivFb.setOnClickListener(v -> handleFb(this));
         ivTwitter.setOnClickListener(v -> handleTwitter(this));
-        ivInstagram.setOnClickListener(v -> handleInsta(this));
+        ivInsta.setOnClickListener(v -> handleInsta(this));
         ivSnap.setOnClickListener(v -> handleSnap(this));
     }
 
     private void setUpAnimations() {
         YoYo.with(Techniques.ZoomInDown)
-                .duration(1500)
+                .duration(1000)
                 .playOn(container);
     }
 

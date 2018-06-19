@@ -39,7 +39,9 @@ import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 
     private DatabaseReference userReference;
     private List<SpecialOffer> specialOffers;
-    private ArrayList<String> offersKeys;
+    private Map<String, String> offerKeyAndValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,13 +93,14 @@ public class MainActivity extends AppCompatActivity
 
         if (specialOffers == null)
             specialOffers = new ArrayList<>();
-        if (offersKeys == null)
-            offersKeys = new ArrayList<>();
+        if (offerKeyAndValue == null)
+            offerKeyAndValue = new HashMap<>();
 
         mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
         setUpToolbar();
         setUpAnimations();
         setDifferentListeners();
+        setUpRecyclerView();
     }
 
     //region userAuth
@@ -191,8 +194,8 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
-                            user.setFavOffers(goinOffersSnap.getValue(String.class));
-                            offersKeys.add(goinOffersSnap.getKey());
+                            offerKeyAndValue.put(goinOffersSnap.getKey(),
+                                    goinOffersSnap.getValue(String.class));
                         }
                     }
 
@@ -249,9 +252,9 @@ public class MainActivity extends AppCompatActivity
         rvSpecialOffers.setLayoutManager(layoutManager);
         OffersAdapter adapter = new OffersAdapter(specialOffers,
                 this,
-                this,
-                this,
-                user.getFavoritedOffers());
+                this
+                , this
+                , offerKeyAndValue);
         rvSpecialOffers.setAdapter(adapter);
     }
     //endregion
@@ -329,43 +332,49 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFavClicked(int position, ImageView view) {
-        retrieveUserFavOffersIfAny();
+        retrieveUserFavOffersIfAny(); //Keep the offers Map updated
         //Now a button on a view clicked , by known the position we can extract the correct uid
         String currentOfferUID = specialOffers.get(position).getUid();
-
-        //Also need a reference of the user favorite offers to check clicked offer is among them or not
-        ArrayList<String> offers = user.getFavoritedOffers();
-
-        Timber.d("current offer uid " + currentOfferUID);
+        //A reference to current user fav offers
+        DatabaseReference favOffersRef = userReference.child(userKey).child(Constants.FAV_OFFERS);
 
         boolean offerAlreadyThere = false;
-        if (offers != null) {// There's offers already must validate if the current offer is favorite
-            for (String offer : offers) {
-                if (offer.equals(currentOfferUID))
+        //First check if the map have nothing inside
+        if (!offerKeyAndValue.isEmpty()) {// Then iterate through the offers and change the boolean accordingly
+            for (Map.Entry<String, String> entry : offerKeyAndValue.entrySet()) {
+                if (entry.getValue().equals(currentOfferUID)) //Offer already in the map
                     offerAlreadyThere = true;
+            }
+            if (offerAlreadyThere) {//Remove the offer from the map
+                String clickedOfferKey = null;
+                //First we need the key pushed to firebase associated with the offer clicked
+                for (Map.Entry<String, String> entry : offerKeyAndValue.entrySet()) {
+                    if (entry.getValue().equals(currentOfferUID))
+                        clickedOfferKey = entry.getKey();
+                }
+                offerKeyAndValue.remove(clickedOfferKey); // use the key to remove it from the map
+                view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.unfav_icon));
+                assert clickedOfferKey != null;
+                favOffersRef.child(clickedOfferKey).removeValue();
+
+            } else {
+                view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fav_icon));
+                DatabaseReference currentOffer = favOffersRef.push();
+                String key = currentOffer.getKey();
+                currentOffer.setValue(currentOfferUID);
+                offerKeyAndValue.put(key, currentOfferUID);
             }
 
         } else {//If there's no fav offers at all we can just push this offers as favorite also add in the list
-            offers = new ArrayList<>();
             view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fav_icon));
             Timber.d("pushing new child ");
-            userReference.child(userKey).child(Constants.FAV_OFFERS).push().setValue(currentOfferUID);
-            offers.add(currentOfferUID);
+            DatabaseReference currentOffer = favOffersRef.push();
+            String key = currentOffer.getKey();
+            currentOffer.setValue(currentOfferUID);
+            offerKeyAndValue.put(key, currentOfferUID);
         }
 
-        if (offerAlreadyThere) {
-            String currentOfferKey = offersKeys.get(position);
-            //This offer is already favorite so remove it from the list and also from database
-            offers.remove(currentOfferUID);
-            Timber.d("array list " + offers.size());
-            view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.unfav_icon));
-            userReference.child(userKey).orderByKey().getRef().equalTo(currentOfferKey).getRef().removeValue();
 
-        } else {
-            view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fav_icon));
-            userReference.child(userKey).child(Constants.FAV_OFFERS).push().setValue(currentOfferUID);
-            offers.add(currentOfferUID);
-        }
     }
 
 }

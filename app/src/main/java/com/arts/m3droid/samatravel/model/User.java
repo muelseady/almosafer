@@ -11,7 +11,6 @@ public class User implements Parcelable {
     private String uid, name, number, email;
 
     private List<RequestingOfferDetails> goingOnOffers;
-    private ArrayList<String> favoritedOffers;
 
     public User() {
     }
@@ -38,12 +37,6 @@ public class User implements Parcelable {
         this.goingOnOffers.add(goingOnOffers);
     }
 
-    public void setFavOffers(String doneOffers) {
-        if (favoritedOffers == null) {
-            favoritedOffers = new ArrayList<>();
-        }
-        favoritedOffers.add(doneOffers);
-    }
 
     public String getUid() {
         return uid;
@@ -63,10 +56,6 @@ public class User implements Parcelable {
 
     public List<RequestingOfferDetails> getGoinOnOffers() {
         return goingOnOffers;
-    }
-
-    public ArrayList<String> getFavoritedOffers() {
-        return favoritedOffers;
     }
 
 

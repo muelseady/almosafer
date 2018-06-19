@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "878052867881-p3sui1bijhlhgrhjsmadhba50ciiahc8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arts.m3droid.samatravel",
+            "certificate_hash": "f7e79f4295889ed84a074dba5ef5141d16317679"
+          }
+        },
+        {
+          "client_id": "878052867881-3bfo3mqq9dif4rgv957ts1b0fhgbek6u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arts.m3droid.samatravel",
+            "certificate_hash": "8f92e0e30731ca0d85a61dc6c700ff68b02b913e"
+          }
+        },
+        {
           "client_id": "878052867881-aq296hmle0qeeg8r0q3lmgvjp74lqmtp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
