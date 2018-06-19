@@ -52,6 +52,8 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
     ImageView ivInstagram;
     @BindView(R.id.iv_snap)
     ImageView ivSnap;
+    @BindView(R.id.tv_contacts)
+    TextView tvContac;
 
     private SpecialOffer specialOffer;
     private User user;
@@ -72,6 +74,7 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
         setUpAnimations();
         nestedScrollView.setNestedScrollingEnabled(true);
 
+        tvContac.setTextColor(getResources().getColor(R.color.black));
         ivFb.setOnClickListener(v -> handleFb(this));
         ivTwitter.setOnClickListener(v -> handleTwitter(this));
         ivInstagram.setOnClickListener(v -> handleInsta(this));
@@ -79,8 +82,8 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
     }
 
     private void setUpAnimations() {
-        YoYo.with(Techniques.RollIn)
-                .duration(1000)
+        YoYo.with(Techniques.ZoomInDown)
+                .duration(1500)
                 .playOn(container);
     }
 

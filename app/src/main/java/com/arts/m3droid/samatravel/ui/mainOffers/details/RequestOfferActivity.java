@@ -177,15 +177,14 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
         if (!extractTrimmedString(etPplAdults).isEmpty())
             adults = Integer.parseInt(extractTrimmedString(etPplAdults));
 
-
         if (!extractTrimmedString(etPplOver65).isEmpty())
-            adults = Integer.parseInt(extractTrimmedString(etPplOver65));
+            over65 = Integer.parseInt(extractTrimmedString(etPplOver65));
 
         if (!extractTrimmedString(etChildren).isEmpty())
-            adults = Integer.parseInt(extractTrimmedString(etChildren));
+            children = Integer.parseInt(extractTrimmedString(etChildren));
 
         if (!extractTrimmedString(etInfant).isEmpty())
-            adults = Integer.parseInt(extractTrimmedString(etInfant));
+            infants = Integer.parseInt(extractTrimmedString(etInfant));
 
         notes = extractTrimmedString(etNotes);
         if (etEmpNum.getText() != null)

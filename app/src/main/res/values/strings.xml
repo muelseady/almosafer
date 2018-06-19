@@ -52,5 +52,14 @@
     <string name="txt_budget_req">الميزانيه</string>
     <string name="choose_what_you_like">برجاء اختيار ماتفضل بين</string>
     <string name="txt_offer_details">تفاصيل الطلب</string>
+    <string name="txt_write_your_message">اكتب رسالتك ..</string>
+    <string name="txt_youll_be_answered">سيتم الرد علي طلبكم في اسرع وقت</string>
+    <string name="txt_no_history">يبدو انك لم تحزم امتعتك للسفر بعد ..</string>
+    <string name="txt_all_your_deals_will_be_here">جميع تعاملاتك سوف تظهر هنا</string>
+    <string name="first_number">0555593814</string>
+    <string name="second_number">0542196765</string>
+    <string name="third_number">0541734167</string>
+    <string name="fourth_number">0125503003</string>
+    <string name="txt_contact_whats">او من خلال ارقامنا علي الواتس اب</string>
 
 </resources>

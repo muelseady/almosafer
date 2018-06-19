@@ -1,43 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/background">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/contact_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/social_footer" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_contacts"
+        style="@style/tv_request_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_32"
+        android:text="@string/txt_contact_whats"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_container" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_62"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_contacts">
+
 
         <TextView
-            android:id="@+id/tv_contacts"
-            style="@style/tv_request_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_16"
-            android:text="@string/txt_contact_us" />
+            android:id="@+id/tv_first_number"
+            style="@style/tv_history_details"
+            android:layout_marginTop="@dimen/dp_16"
+            android:drawablePadding="@dimen/dp_8"
+            android:drawableStart="@drawable/whats_icon"
+            android:text="@string/first_number" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            style="@style/desc_social_media"
-            android:contentDescription="@string/dsc_social_media"
-            android:src="@drawable/twitter_icon" />
+        <TextView
+            android:id="@+id/tv_second_number"
+            style="@style/tv_history_details"
+            android:layout_marginTop="@dimen/dp_16"
+            android:drawablePadding="@dimen/dp_8"
+            android:drawableStart="@drawable/whats_icon"
+            android:text="@string/second_number" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            style="@style/desc_social_media"
-            android:contentDescription="@string/dsc_social_media"
-            android:src="@drawable/fb_icon" />
+        <TextView
+            android:id="@+id/tv_third_number"
+            style="@style/tv_history_details"
+            android:layout_marginTop="@dimen/dp_16"
+            android:drawablePadding="@dimen/dp_8"
+            android:drawableStart="@drawable/whats_icon"
+            android:text="@string/third_number" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            style="@style/desc_social_media"
-            android:contentDescription="@string/dsc_social_media"
-            android:src="@drawable/instagram_icon" />
 
-        <ImageView
-            style="@style/desc_social_media"
-            android:contentDescription="@string/dsc_social_media"
-            android:src="@drawable/snapchat_icon" />
+        <TextView
+            android:id="@+id/tv_fourth_number"
+            style="@style/tv_history_details"
+            android:layout_marginTop="@dimen/dp_16"
+            android:drawablePadding="@dimen/dp_8"
+            android:drawableStart="@drawable/whats_icon"
+            android:text="@string/fourth_number" />
+
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

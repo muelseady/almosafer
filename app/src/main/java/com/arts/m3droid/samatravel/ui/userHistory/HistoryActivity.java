@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
@@ -20,6 +22,8 @@ public class HistoryActivity extends AppCompatActivity implements HistoryOffersA
 
     @BindView(R.id.rv_offers_history)
     RecyclerView rvOffersHistory;
+    @BindView(R.id.empty_view)
+    LinearLayout emptyView;
 
     private User user;
 
@@ -30,17 +34,19 @@ public class HistoryActivity extends AppCompatActivity implements HistoryOffersA
         ButterKnife.bind(this);
 
         handleComingIntent();
-        retrieveTheSpecialOffersByThereIDs();
-        setUpRecyclerView();
+        if (user.getGoinOnOffers() == null) {
+            emptyView.setVisibility(View.VISIBLE);
+            rvOffersHistory.setVisibility(View.GONE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+            rvOffersHistory.setVisibility(View.VISIBLE);
+            setUpRecyclerView();
+        }
         setUpToolbar();
     }
 
     private void handleComingIntent() {
         user = getIntent().getParcelableExtra(Constants.NODE_USERS);
-    }
-
-    private void retrieveTheSpecialOffersByThereIDs() {
-
     }
 
     private void setUpRecyclerView() {

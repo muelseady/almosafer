@@ -9,4 +9,6 @@
     <color name="cancelled_offer_card">#f44336</color>
     <color name="goingOn_offer_card">#03A9F4</color>
     <color name="Done_offer_card">#4CAF50</color>
+
+    <color name="black">#000</color>
 </resources>

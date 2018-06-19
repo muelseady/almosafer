@@ -44,6 +44,7 @@
         android:id="@+id/container_nested_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.constraint.ConstraintLayout
@@ -52,12 +53,13 @@
             android:layout_marginTop="@dimen/dp_16">
 
             <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_8"
                 android:layout_marginStart="@dimen/dp_8"
-                app:layout_constraintBottom_toTopOf="@+id/container_contacts"
+                app:layout_constraintBottom_toTopOf="@+id/btn_special_offer_request"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -71,80 +73,42 @@
                     android:textSize="@dimen/sp_16" />
             </android.support.v7.widget.CardView>
 
-            <LinearLayout
-                android:id="@+id/container_contacts"
-                android:layout_width="match_parent"
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/btn_special_offer_request"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/colorAccent"
+                android:minWidth="60dp"
+                android:paddingBottom="@dimen/dp_8"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_8"
+                android:text="@string/txt_done_request"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/foter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_view" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/foter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_16"
                 android:layoutDirection="rtl"
-                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_special_offer_request">
 
-
-                <com.dd.processbutton.iml.ActionProcessButton
-                    android:id="@+id/btn_special_offer_request"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/dp_16"
-                    android:layout_marginTop="@dimen/dp_16"
-                    android:background="@color/colorAccent"
-                    android:minWidth="60dp"
-                    android:paddingBottom="@dimen/dp_8"
-                    android:paddingEnd="@dimen/dp_16"
-                    android:paddingStart="@dimen/dp_16"
-                    android:paddingTop="@dimen/dp_8"
-                    android:text="@string/txt_done_request"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_62"
-                    android:layout_marginBottom="@dimen/dp_16"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_contacts"
-                        style="@style/tv_request_main"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="@dimen/dp_16"
-                        android:paddingBottom="@dimen/dp_4"
-                        android:text="@string/txt_contact_us" />
-
-                    <ImageView
-                        android:id="@+id/iv_twitter"
-                        style="@style/desc_social_media"
-                        android:contentDescription="@string/dsc_social_media"
-                        android:src="@drawable/twitter_icon" />
-
-                    <ImageView
-                        android:id="@+id/iv_fb"
-                        style="@style/desc_social_media"
-                        android:contentDescription="@string/dsc_social_media"
-                        android:src="@drawable/fb_icon" />
-
-                    <ImageView
-                        android:id="@+id/iv_instagram"
-                        style="@style/desc_social_media"
-                        android:contentDescription="@string/dsc_social_media"
-                        android:src="@drawable/instagram_icon" />
-
-                    <ImageView
-                        android:id="@+id/iv_snap"
-                        style="@style/desc_social_media"
-                        android:contentDescription="@string/dsc_social_media"
-                        android:src="@drawable/snapchat_icon" />
-                </LinearLayout>
-
-
-            </LinearLayout>
+                <include layout="@layout/social_footer" />
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
 

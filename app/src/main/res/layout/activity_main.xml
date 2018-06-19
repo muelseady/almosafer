@@ -29,52 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <LinearLayout
-            android:id="@+id/contact_container"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_62"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/tv_contacts"
-                style="@style/tv_request_main"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/dp_16"
-                android:paddingBottom="@dimen/dp_4"
-                android:text="@string/txt_contact_us"
-                android:textColor="@android:color/white" />
-
-            <ImageView
-                android:id="@+id/iv_twitter"
-                style="@style/desc_social_media"
-                android:contentDescription="@string/dsc_social_media"
-                android:src="@drawable/twitter_icon" />
-
-            <ImageView
-                android:id="@+id/iv_fb"
-                style="@style/desc_social_media"
-                android:contentDescription="@string/dsc_social_media"
-                android:src="@drawable/fb_icon" />
-
-            <ImageView
-                android:id="@+id/iv_instagram"
-                style="@style/desc_social_media"
-                android:contentDescription="@string/dsc_social_media"
-                android:src="@drawable/instagram_icon" />
-
-            <ImageView
-                android:id="@+id/iv_snap"
-                style="@style/desc_social_media"
-                android:contentDescription="@string/dsc_social_media"
-                android:src="@drawable/snapchat_icon" />
-        </LinearLayout>
+        <include layout="@layout/social_footer" />
     </android.support.constraint.ConstraintLayout>
 
     <!--menu-->

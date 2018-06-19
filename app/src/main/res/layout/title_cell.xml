@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cell_title_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-   >
-
-
-    <ImageView
-        android:id="@+id/iv_title_background"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/desc_offer_image"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@id/container_details"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/container_details"
@@ -42,40 +26,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
             android:baselineAligned="false"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_16"
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/tv_history_details_main_card"
+                    style="@style/tv_history_details"
                     android:text="@string/txt_name" />
 
                 <TextView
-                    style="@style/tv_history_details_main_card"
+                    style="@style/tv_history_details"
                     android:text="@string/txt_number" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_8"
-                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_client_name"
-                    style="@style/tv_history_details_main_card"
-                    tools:text="هزاع بن زايد " />
+                    style="@style/tv_history_details" />
 
                 <TextView
                     android:id="@+id/tv_client_number"
-                    style="@style/tv_history_details_main_card"
-                    android:text="012214114" />
+                    style="@style/tv_history_details" />
 
             </LinearLayout>
         </LinearLayout>
