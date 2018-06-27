@@ -14,18 +14,18 @@ import com.arts.m3droid.samatravel.model.SpecialOffer;
 import com.arts.m3droid.samatravel.utils.ImageUtils;
 
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.SpecialViewHolder> {
 
     private OnItemClicked clickListener;
     private OnFavButtonClicked onFavButtonClicked;
-    private Map<String, String> favOffers;
     private List<SpecialOffer> specialOffers;
     private Context context;
+    private List<String> favOffers;
 
     public interface OnItemClicked {
         void onClick(int position);
@@ -36,12 +36,13 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.SpecialVie
     }
 
     OffersAdapter(List<SpecialOffer> specialOffers, OnItemClicked clickListener,
-                  OnFavButtonClicked onFavClickedListener, Context context, Map<String, String> favOffers) {
+                  OnFavButtonClicked onFavClickedListener, Context context, List<String> favOffers) {
         this.clickListener = clickListener;
         this.specialOffers = specialOffers;
         this.onFavButtonClicked = onFavClickedListener;
-        this.favOffers = favOffers;
         this.context = context;
+        this.favOffers = favOffers;
+        setHasStableIds(true);
     }
 
     @NonNull
@@ -50,28 +51,36 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.SpecialVie
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_special_offers, parent, false);
-
         return new SpecialViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SpecialViewHolder holder, int position) {
+        SpecialOffer specialOffer = specialOffers.get(position);
 
-        ImageUtils.setImageOnImageView(specialOffers.get(position).getImageUrl(), holder.offerCard);
+        ImageUtils.setImageOnImageView(specialOffer.getImageUrl(), holder.offerCard);
 
-        boolean favoriteOffer = false;
-        for (Map.Entry<String, String> entry : favOffers.entrySet()) {
-            if (entry.getValue().equals(specialOffers.get(position).getUid()))//Offer already in the map
-                favoriteOffer = true;
+        if (favOffers.isEmpty()) return;
+
+        //Todo the problem is still lying here when ever kill the activity and back the favorite offers shown not correctly!!
+        boolean thisOfferIsFavorite = false;
+        for (String favOfferId : favOffers) {
+            Timber.d("called with favOfferId " + favOfferId + "  special offer id " + specialOffer.getUid());
+            if (favOfferId.equals(specialOffer.getUid()))
+                thisOfferIsFavorite = true;
         }
-
-        if (favoriteOffer)
+        if (thisOfferIsFavorite) {
             holder.btnFav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fav_icon));
-        else {
+        } else {
             holder.btnFav.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.unfav_icon));
         }
+
     }
 
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 
     @Override
     public int getItemCount() {

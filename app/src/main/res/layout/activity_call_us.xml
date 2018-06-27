@@ -45,7 +45,7 @@
             android:layout_marginTop="@dimen/dp_16"
             android:drawablePadding="@dimen/dp_8"
             android:drawableStart="@drawable/whats_icon"
-            android:text="@string/first_number" />
+            android:text="رقم واتساب" />
 
         <TextView
             android:id="@+id/tv_second_number"
@@ -53,15 +53,15 @@
             android:layout_marginTop="@dimen/dp_16"
             android:drawablePadding="@dimen/dp_8"
             android:drawableStart="@drawable/whats_icon"
-            android:text="@string/second_number" />
+            android:text="رقم واتساب" />
 
         <TextView
             android:id="@+id/tv_third_number"
             style="@style/tv_history_details"
             android:layout_marginTop="@dimen/dp_16"
             android:drawablePadding="@dimen/dp_8"
-            android:drawableStart="@drawable/whats_icon"
-            android:text="@string/third_number" />
+            android:drawableStart="@drawable/drawer_call_icon"
+            android:text="رقم ارضي" />
 
 
         <TextView
@@ -69,8 +69,8 @@
             style="@style/tv_history_details"
             android:layout_marginTop="@dimen/dp_16"
             android:drawablePadding="@dimen/dp_8"
-            android:drawableStart="@drawable/whats_icon"
-            android:text="@string/fourth_number" />
+            android:drawableStart="@drawable/drawer_call_icon"
+            android:text="رقم ارضي" />
 
     </LinearLayout>
 

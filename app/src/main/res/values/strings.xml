@@ -34,6 +34,10 @@
     <string name="txt_require_internet">برجاء تأكد من وجود انترنت</string>
     <string name="txt_error_signOut">نعتذر حدث خطأ حاول تسجيل الخروج مره اخري</string>
 
+    <string name="img">image/*</string>
+    <string name="image_picker">Complete Action Using</string>
+
+
     <string name="facebook_app_id">2165674750334030</string>
     <string name="fb_login_protocol_scheme">fb2165674750334030</string>
 
@@ -56,10 +60,12 @@
     <string name="txt_youll_be_answered">سيتم الرد علي طلبكم في اسرع وقت</string>
     <string name="txt_no_history">يبدو انك لم تحزم امتعتك للسفر بعد ..</string>
     <string name="txt_all_your_deals_will_be_here">جميع تعاملاتك سوف تظهر هنا</string>
-    <string name="first_number">0555593814</string>
-    <string name="second_number">0542196765</string>
-    <string name="third_number">0541734167</string>
-    <string name="fourth_number">0125503003</string>
+    <string name="first_number">009665555593814</string>
+    <string name="second_number">00966556865563</string>
+    <string name="third_number">00966125503003</string>
+    <string name="fourth_number">00966127331497</string>
     <string name="txt_contact_whats">او من خلال ارقامنا علي الواتس اب</string>
+    <string name="txt_image_done">تم اضافه الصوره</string>
+    <string name="txt_error_adding_image">برجاء محاوله اضافه الصوره مره اخري</string>
 
 </resources>

@@ -45,7 +45,7 @@ dependencies {
 
 
     implementation 'com.google.firebase:firebase-database:16.0.1' //Firebase dependencies
-    implementation 'com.google.firebase:firebase-auth:16.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
     implementation 'com.firebaseui:firebase-ui-auth:4.0.1'
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
@@ -65,7 +65,10 @@ dependencies {
     implementation 'info.hoang8f:fbutton:1.0.5' //FlatButton
     implementation 'lib.kingja.switchbutton:switchbutton:1.1.7' //RadioButton
 
+
     implementation 'com.ramotion.foldingcell:folding-cell:1.2.2' //FoldingCard
+
+    implementation 'com.github.lguipeng:BubbleView:1.0.1' //BubbleView For chat
 
     implementation 'com.jakewharton:butterknife:8.8.1' //ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

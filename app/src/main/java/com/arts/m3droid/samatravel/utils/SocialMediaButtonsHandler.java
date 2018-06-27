@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.widget.Toast;
 
 public class SocialMediaButtonsHandler {
 
@@ -30,7 +31,11 @@ public class SocialMediaButtonsHandler {
         Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
         String facebookUrl = finalUrl;
         facebookIntent.setData(Uri.parse(facebookUrl));
-        activity.startActivity(facebookIntent);
+        if (facebookIntent.resolveActivity(activity.getPackageManager()) != null) {
+            activity.startActivity(facebookIntent);
+        } else {
+            Toast.makeText(activity, "برجاء التأكد من وجود برنامج facebook", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -46,10 +51,9 @@ public class SocialMediaButtonsHandler {
     }
 
     public static void handleSnap(Activity activity) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("*/*");
-        intent.setPackage("com.snapchat.android");
-        activity.startActivity(Intent.createChooser(intent, "برجاء تثبيت برنامج سناب شات اولا"));
+        Intent nativeAppIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.snapchat.com/add/sama_almosafer"));
+        activity.startActivity(nativeAppIntent);
+        activity.startActivity(Intent.createChooser(nativeAppIntent, "برجاء تثبيت برنامج سناب شات اولا"));
     }
 
     public static void handleInsta(Activity activity) {

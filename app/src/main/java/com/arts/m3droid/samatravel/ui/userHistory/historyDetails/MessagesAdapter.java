@@ -2,22 +2,28 @@ package com.arts.m3droid.samatravel.ui.userHistory.historyDetails;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.arts.m3droid.samatravel.Constants;
 import com.arts.m3droid.samatravel.R;
 import com.arts.m3droid.samatravel.model.Message;
 import com.bumptech.glide.Glide;
+import com.github.library.bubbleview.BubbleTextView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Messag extends RecyclerView.Adapter<MessagesAdapter.MessageViewHolder> {
+import static android.view.ViewGroup.*;
+
+public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageViewHolder> {
 
     private List<Message> mMessagesList;
 
@@ -40,9 +46,34 @@ public class Messag extends RecyclerView.Adapter<MessagesAdapter.MessageViewHold
         holder.senderName.setText(message.getSenderName());
         holder.messageBody.setText(message.getMessageBody());
 
-        Glide.with(holder.messageImage.getContext())
-                .load(message.getImageUrl())
-                .into(holder.messageImage);
+        if (message.getSenderCategory().equals(Constants.CAT_USER)) {
+            holder.messageBody.setVisibility(View.VISIBLE);
+            holder.messageEmpBody.setVisibility(View.GONE);
+            holder.messageBody.setText(message.getMessageBody());
+            LinearLayout.LayoutParams params =
+                    new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.START;
+
+            holder.senderName.setLayoutParams(params);
+        } else {
+            holder.messageEmpBody.setVisibility(View.VISIBLE);
+            holder.messageBody.setVisibility(View.GONE);
+            LinearLayout.LayoutParams params =
+                    new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.END;
+
+            holder.senderName.setLayoutParams(params);
+            holder.messageEmpBody.setText(message.getMessageBody());
+        }
+
+        if (message.getImageUrl() != null) {
+            holder.messageBody.setVisibility(View.GONE);
+            holder.messageEmpBody.setVisibility(View.GONE);
+
+            Glide.with(holder.messageImage.getContext())
+                    .load(message.getImageUrl())
+                    .into(holder.messageImage);
+        }
     }
 
     @Override
@@ -62,8 +93,10 @@ public class Messag extends RecyclerView.Adapter<MessagesAdapter.MessageViewHold
 
         @BindView(R.id.nameTextView)
         TextView senderName;
-        @BindView(R.id.messageTextView)
-        TextView messageBody;
+        @BindView(R.id.body_for_me)
+        BubbleTextView messageBody;
+        @BindView(R.id.body_for_employee)
+        BubbleTextView messageEmpBody;
         @BindView(R.id.photoImageView)
         ImageView messageImage;
 

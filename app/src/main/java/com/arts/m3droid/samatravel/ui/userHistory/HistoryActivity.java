@@ -73,6 +73,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryOffersA
     public void onClick(int position) {
         Intent intent = new Intent(this, HistoryOfferDetails.class);
         intent.putExtra(Constants.NODE_GOINGON_OFFERS, user.getGoinOnOffers().get(position));
+        intent.putExtra(Constants.NODE_USERS, user);
         startActivity(intent);
     }
 }

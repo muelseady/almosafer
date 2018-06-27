@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +24,12 @@ import com.arts.m3droid.samatravel.utils.DatePicker;
 import com.arts.m3droid.samatravel.utils.FirebaseFactory;
 import com.arts.m3droid.samatravel.utils.Validator;
 import com.dd.processbutton.iml.ActionProcessButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +65,8 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
     EditText etEmpNum;
     @BindView(R.id.et_place_from)
     EditText etPlaceFrom;
-    @BindView(R.id.et_place_to)
-    EditText etPlaceTo;
+    @BindView(R.id.spinner_to_countries)
+    AppCompatSpinner spinnerPlaceTo;
     @BindView(R.id.custom_data_container)
     LinearLayout customDataContainer;
     @BindView(R.id.tv_if_invited)
@@ -93,6 +99,8 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
     private String pack = Constants.PACK_AND_TOURISM;
     private String currency = Constants.CURRENCY_DEFAULT;
 
+    private String placeTo = "لم يحدد";
+    private ArrayList<String> countries = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,6 +120,7 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
             customDataContainer.setVisibility(View.VISIBLE);
             switchPack.setOnSwitchListener((position, tabText) -> pack = tabText);
             switchHotels.setOnSwitchListener((position, tabText) -> hotel = tabText);
+            setUpCountriesSpinner();
             spinnerCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -123,6 +132,19 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            spinnerPlaceTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    placeTo = countries.get(position);
+                    spinnerPlaceTo.setSelection(position);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    spinnerPlaceTo.setSelection(0);
 
                 }
             });
@@ -138,6 +160,34 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
 
         etDateFrom.setOnClickListener(v -> setUpDatePicker(true));
         etDateTo.setOnClickListener(v -> setUpDatePicker(false));
+    }
+
+    private void setUpCountriesSpinner() {
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_spinner_item,
+                        countries); //selected item will look like a spinner set from XML
+
+        FirebaseFactory.getDatabase().getReference("places")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        countries.clear();
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            countries.add(dataSnapshot1.getValue(String.class));
+                        }
+
+                        spinnerArrayAdapter.setDropDownViewResource(android.R.layout
+                                .simple_spinner_dropdown_item);
+                        spinnerPlaceTo.setAdapter(spinnerArrayAdapter);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
     }
 
     private void setUpDatePicker(Boolean toOrFrom) {
@@ -187,7 +237,8 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
             infants = Integer.parseInt(extractTrimmedString(etInfant));
 
         notes = extractTrimmedString(etNotes);
-        if (etEmpNum.getText() != null)
+
+        if (!etEmpNum.getText().toString().trim().equals(""))
             employeeKey = etEmpNum.getText().toString().trim();
 
         HandleDataIfSpecialNorCustom(name, number, dateFrom, dateTo, adults, over65,
@@ -207,20 +258,16 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
                             specialOffer.getName(), specialOffer.getDetails(), specialOffer.getImageUrl());
         } else {//Custom offer so you need some more fields
 
-            String placeFrom = null, placeTo = null, budget = null;
+            String placeFrom = null, budget = null;
             if (Validator.validateETNotNull(etPlaceFrom, warningMessage))
                 placeFrom = extractTrimmedString(etPlaceFrom);
-            if (Validator.validateETNotNull(etPlaceTo, warningMessage))
-                placeTo = extractTrimmedString(etPlaceTo);
             if (Validator.validateETNotNull(etBudget, warningMessage))
                 budget = extractTrimmedString(etBudget);
 
-            // The emp key now is in the unasnwered offers to be visible to the emp with the similar key ...
             offerRequest = new RequestingOfferDetails(name, number,
                     dateFrom, dateTo, user.getUid(),
                     adults, children, infants, over65, notes,
-                    Constants.OFFER_CUSTOM, pack, hotel, placeFrom, placeTo, budget, currency
-            );
+                    Constants.OFFER_CUSTOM, pack, hotel, placeFrom, placeTo, budget, currency);
         }
 
 
@@ -234,7 +281,7 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
         } else {
             if (Validator.validateETHasError(etFirstName, etSecondName, etThirdName,
                     etDateFrom, etDateTo,
-                    etNumber, etPlaceFrom, etPlaceTo, etBudget)) {
+                    etNumber, etPlaceFrom, etBudget)) {
                 pushTheValidatedData(offerRequest);
             }
         }
@@ -264,7 +311,7 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
                     (specialOffer.getName(), requestedOfferId, specialOffer.getImageUrl());
         } else {
             requestingOffer = createRequestingOffer
-                    (Constants.NODE_CUSTOM_OFFER, requestedOfferId, null);
+                    ("عرض خاص ", requestedOfferId, null);
         }
 
         unAnsweredRequests.push().setValue(requestingOffer);

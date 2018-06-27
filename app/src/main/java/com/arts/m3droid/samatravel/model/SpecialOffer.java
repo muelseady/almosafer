@@ -16,6 +16,7 @@ public class SpecialOffer implements Parcelable {
         this.details = details;
     }
 
+
     public void setUid(String uid) {
         this.uid = uid;
     }

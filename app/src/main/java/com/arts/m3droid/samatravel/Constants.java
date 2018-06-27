@@ -24,4 +24,9 @@ public class Constants {
     public static final String OFFER_CANCELLED = "cancelled";
     public static final String OFFER_GOING = "going";
     public static final String OFFER_DONE = "done";
+    public static final String MESSAGES_NODE_DB = "messages";
+
+    public static final int RC_PHOTO_PICKER = 2032;
+    public static final String IMAGES_REF = "SpecialOffers";
+    public static final String CAT_USER = "User";
 }

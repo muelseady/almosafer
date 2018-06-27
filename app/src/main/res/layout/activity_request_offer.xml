@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_16"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <TextView
@@ -139,11 +139,19 @@
                     android:gravity="center"
                     android:hint="@string/txt_from_place" />
 
-                <EditText
-                    android:id="@+id/et_place_to"
-                    style="@style/et_request_place"
-                    android:gravity="center"
-                    android:hint="@string/txt_to_place" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:text="@string/txt_to_place" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spinner_to_countries"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_weight="1" />
 
 
             </LinearLayout>

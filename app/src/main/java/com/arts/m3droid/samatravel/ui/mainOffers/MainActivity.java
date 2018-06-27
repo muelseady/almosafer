@@ -21,6 +21,7 @@ import com.arts.m3droid.samatravel.model.SpecialOffer;
 import com.arts.m3droid.samatravel.model.User;
 import com.arts.m3droid.samatravel.ui.AuthUIActivity;
 import com.arts.m3droid.samatravel.ui.callUs.CallUsActivity;
+import com.arts.m3droid.samatravel.ui.favorite.FavoriteActivity;
 import com.arts.m3droid.samatravel.ui.mainOffers.details.RequestOfferActivity;
 import com.arts.m3droid.samatravel.ui.mainOffers.details.SpecialOffersDetailsActivity;
 import com.arts.m3droid.samatravel.ui.userHistory.HistoryActivity;
@@ -39,9 +40,8 @@ import com.mxn.soul.flowingdrawer_core.ElasticDrawer;
 import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Iterator;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity
     TextView tvHistory;
     @BindView(R.id.tv_call_us)
     TextView tvCallUs;
+    @BindView(R.id.tv_fav)
+    TextView tvFavActivity;
     @BindView(R.id.tv_signOut)
     TextView signOut;
     @BindView(R.id.iv_twitter)
@@ -80,10 +82,14 @@ public class MainActivity extends AppCompatActivity
     private String userKey;
 
     private DatabaseReference userReference;
-    private List<SpecialOffer> specialOffers;
-    private Map<String, String> offerKeyAndValue;
+    private ArrayList<SpecialOffer> specialOffers;
+    private ArrayList<String> favOffersIds = new ArrayList<>();
+
+    OffersAdapter adapter;
+
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -93,14 +99,11 @@ public class MainActivity extends AppCompatActivity
 
         if (specialOffers == null)
             specialOffers = new ArrayList<>();
-        if (offerKeyAndValue == null)
-            offerKeyAndValue = new HashMap<>();
 
         mDrawer.setTouchMode(ElasticDrawer.TOUCH_MODE_BEZEL);
         setUpToolbar();
         setUpAnimations();
         setDifferentListeners();
-        setUpRecyclerView();
     }
 
     //region userAuth
@@ -134,6 +137,8 @@ public class MainActivity extends AppCompatActivity
         user = new User(userKey, userName, userNumber, userEmail);
 
         loadSpecialOffers();
+        loadFavOffers();
+//        setUpRecyclerView();
 
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -168,7 +173,10 @@ public class MainActivity extends AppCompatActivity
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
-                                        user.setGoingOnOffers(goinOffersSnap.getValue(RequestingOfferDetails.class));
+                                        RequestingOfferDetails requestingOffer =
+                                                goinOffersSnap.getValue(RequestingOfferDetails.class);
+                                        Objects.requireNonNull(requestingOffer).setOfferKey(goinOffersSnap.getKey());
+                                        user.setGoingOnOffers(requestingOffer);
                                     }
                                 }
 
@@ -177,7 +185,6 @@ public class MainActivity extends AppCompatActivity
 
                                 }
                             });
-                    retrieveUserFavOffersIfAny();
                 }
             }
 
@@ -188,25 +195,11 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void retrieveUserFavOffersIfAny() {
-        userReference.child(userKey).child(Constants.FAV_OFFERS).
-                addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
-                            offerKeyAndValue.put(goinOffersSnap.getKey(),
-                                    goinOffersSnap.getValue(String.class));
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
-    }
     //endregion
 
+
     //region specialOffersRetrieve
+
     private void loadSpecialOffers() {
         DatabaseReference specialOfferReference =
                 FirebaseFactory.getDatabase().getReference().child(Constants.NODE_SPECIAL_OFFERS);
@@ -216,10 +209,11 @@ public class MainActivity extends AppCompatActivity
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 SpecialOffer specialOffer = dataSnapshot.getValue(SpecialOffer.class);
-                specialOffers.add(specialOffer);
-                setUpRecyclerView();
                 if (specialOffer == null) return;
                 specialOffer.setUid(dataSnapshot.getKey());
+
+                specialOffers.add(specialOffer);
+                setUpRecyclerView();
             }
 
             @Override
@@ -244,21 +238,9 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private void setUpRecyclerView() {
-        rvSpecialOffers.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        rvSpecialOffers.setLayoutManager(layoutManager);
-        OffersAdapter adapter = new OffersAdapter(specialOffers,
-                this,
-                this
-                , this
-                , offerKeyAndValue);
-        rvSpecialOffers.setAdapter(adapter);
-    }
     //endregion
 
+    //region viewsHandling
     private void setDifferentListeners() {
         //Social media icons listeners
         ivFb.setOnClickListener(v -> handleFb(this));
@@ -282,7 +264,27 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, CallUsActivity.class);
             startActivity(intent);
         });
+        tvFavActivity.setOnClickListener(v -> {
+            Intent intent = new Intent(this, FavoriteActivity.class);
+            intent.putExtra("userKey", userKey);
+            intent.putParcelableArrayListExtra(Constants.DATA_SPECIAL_OFFER, specialOffers);
+            intent.putExtra(Constants.CAT_USER, user);
+            startActivity(intent);
+        });
         signOut.setOnClickListener(v -> performSignOut()); // Sign out from Auth as simple as that
+    }
+
+    private void setUpRecyclerView() {
+        rvSpecialOffers.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        rvSpecialOffers.setLayoutManager(layoutManager);
+        adapter = new OffersAdapter(specialOffers,
+                this,
+                this
+                , this
+                , favOffersIds);
+        rvSpecialOffers.setAdapter(adapter);
     }
 
     private void setUpAnimations() {
@@ -290,13 +292,7 @@ public class MainActivity extends AppCompatActivity
                 .duration(2000)
                 .playOn(rvSpecialOffers);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home)
-            mDrawer.toggleMenu();
-        return super.onOptionsItemSelected(item);
-    }
+//endregion
 
     @Override
     public void onClick(int position) {
@@ -304,6 +300,73 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(Constants.DATA_SPECIAL_OFFER, specialOffers.get(position));
         intent.putExtra(Constants.NODE_USERS, user);
         startActivity(intent);
+    }
+
+    //region favOffers
+
+    private void loadFavOffers() {
+        userReference.child(userKey).child(Constants.FAV_OFFERS).
+                addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
+                            favOffersIds.add(goinOffersSnap.getKey());
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    @Override
+    public void onFavClicked(int position, ImageView view) {
+
+        SpecialOffer specialOffer = specialOffers.get(position);
+        DatabaseReference favOffersRef = userReference.child(userKey).child(Constants.FAV_OFFERS);
+
+        boolean thisOfferFav = false;
+
+        for (int i = 0; i < favOffersIds.size(); i++) {
+            String string = favOffersIds.get(i);
+            if (string.equals(specialOffer.getUid())) {
+                thisOfferFav = true;
+                break;
+            }
+        }
+
+
+        if (thisOfferFav) {
+            for (Iterator<String> iterator = favOffersIds.iterator(); iterator.hasNext(); ) {
+                String name = iterator.next();
+                if (specialOffer.getUid().equals(name)) {
+                    iterator.remove();
+                }
+            }
+            Timber.d("size " + favOffersIds.size());
+            favOffersRef.child(specialOffer.getUid()).removeValue();
+            view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.unfav_icon));
+            Toast.makeText(this, "تم حذف هذا العرض من المفضلات", Toast.LENGTH_SHORT).show();
+        } else
+
+        {
+            favOffersRef.child(specialOffer.getUid()).setValue(specialOffer.getUid());
+            favOffersIds.add(specialOffer.getUid());
+            Toast.makeText(this, "تم حذف هذا العرض من المفضلات", Toast.LENGTH_SHORT).show();
+            view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fav_icon));
+        }
+    }
+
+
+    //endregion
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home)
+            mDrawer.toggleMenu();
+        return super.onOptionsItemSelected(item);
     }
 
     void setUpToolbar() {
@@ -329,52 +392,4 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
     }
-
-    @Override
-    public void onFavClicked(int position, ImageView view) {
-        retrieveUserFavOffersIfAny(); //Keep the offers Map updated
-        //Now a button on a view clicked , by known the position we can extract the correct uid
-        String currentOfferUID = specialOffers.get(position).getUid();
-        //A reference to current user fav offers
-        DatabaseReference favOffersRef = userReference.child(userKey).child(Constants.FAV_OFFERS);
-
-        boolean offerAlreadyThere = false;
-        //First check if the map have nothing inside
-        if (!offerKeyAndValue.isEmpty()) {// Then iterate through the offers and change the boolean accordingly
-            for (Map.Entry<String, String> entry : offerKeyAndValue.entrySet()) {
-                if (entry.getValue().equals(currentOfferUID)) //Offer already in the map
-                    offerAlreadyThere = true;
-            }
-            if (offerAlreadyThere) {//Remove the offer from the map
-                String clickedOfferKey = null;
-                //First we need the key pushed to firebase associated with the offer clicked
-                for (Map.Entry<String, String> entry : offerKeyAndValue.entrySet()) {
-                    if (entry.getValue().equals(currentOfferUID))
-                        clickedOfferKey = entry.getKey();
-                }
-                offerKeyAndValue.remove(clickedOfferKey); // use the key to remove it from the map
-                view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.unfav_icon));
-                assert clickedOfferKey != null;
-                favOffersRef.child(clickedOfferKey).removeValue();
-
-            } else {
-                view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fav_icon));
-                DatabaseReference currentOffer = favOffersRef.push();
-                String key = currentOffer.getKey();
-                currentOffer.setValue(currentOfferUID);
-                offerKeyAndValue.put(key, currentOfferUID);
-            }
-
-        } else {//If there's no fav offers at all we can just push this offers as favorite also add in the list
-            view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fav_icon));
-            Timber.d("pushing new child ");
-            DatabaseReference currentOffer = favOffersRef.push();
-            String key = currentOffer.getKey();
-            currentOffer.setValue(currentOfferUID);
-            offerKeyAndValue.put(key, currentOfferUID);
-        }
-
-
-    }
-
 }
