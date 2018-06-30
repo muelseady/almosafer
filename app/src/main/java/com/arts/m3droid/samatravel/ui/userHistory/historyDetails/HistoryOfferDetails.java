@@ -30,6 +30,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -41,6 +42,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static com.arts.m3droid.samatravel.Constants.RC_PHOTO_PICKER;
 
@@ -88,10 +90,29 @@ public class HistoryOfferDetails extends AppCompatActivity {
         setContentView(R.layout.activity_history_details);
         ButterKnife.bind(this);
 
+        handleComingIntent();
+
         btnSendMessage.setOnClickListener(v -> sendButtonClicked());
         btnSelectImage.setOnClickListener(v -> onPhotoPickerClicked());
 
-        handleComingIntent();
+        DatabaseReference goinOfferReference =
+                FirebaseFactory.getDatabase().getReference(Constants.NODE_USERS)
+                        .child(user.getUid())
+                        .child(Constants.NODE_GOINGON_OFFERS)
+                        .child(offerDetails.getOfferKey())
+                        .child("Employee");
+        goinOfferReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Timber.d("employee token " + dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         fetchMessages();
         editTextWatcher();
 

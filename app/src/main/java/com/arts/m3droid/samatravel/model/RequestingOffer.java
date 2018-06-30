@@ -27,7 +27,8 @@ public class RequestingOffer {
         return employeeKey;
     }
 
-    public RequestingOffer(String userUID, String offerId, String offerName, String userName, String offerImage, String empKey) {
+    public RequestingOffer(String userUID, String offerId, String offerName, String userName,
+                           String offerImage, String empKey) {
         this.userUID = userUID;
         this.offerId = offerId;
         this.offerName = offerName;

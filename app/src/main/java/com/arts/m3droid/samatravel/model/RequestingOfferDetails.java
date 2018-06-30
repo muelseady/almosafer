@@ -19,6 +19,7 @@ public class RequestingOfferDetails implements Parcelable {
     private String packages, hotels, budget, budgetCurrency;
     private int state;
     private String offerKey;
+    private String userIdToken, empIdToken;
 
     public int getState() {
         return state;
@@ -159,6 +160,22 @@ public class RequestingOfferDetails implements Parcelable {
         return offerImageUrl;
     }
 
+    public void setEmpIdToken(String empIdToken) {
+        this.empIdToken = empIdToken;
+    }
+
+    public String getEmpIdToken() {
+        return empIdToken;
+    }
+
+    public void setUserIdToken(String userIdToken) {
+        this.userIdToken = userIdToken;
+    }
+
+    public String getUserIdToken() {
+        return userIdToken;
+    }
+
 
     @Override
     public int describeContents() {
@@ -188,6 +205,8 @@ public class RequestingOfferDetails implements Parcelable {
         dest.writeString(this.budgetCurrency);
         dest.writeInt(this.state);
         dest.writeString(this.offerKey);
+        dest.writeString(this.userIdToken);
+        dest.writeString(this.empIdToken);
     }
 
     protected RequestingOfferDetails(Parcel in) {
@@ -212,6 +231,8 @@ public class RequestingOfferDetails implements Parcelable {
         this.budgetCurrency = in.readString();
         this.state = in.readInt();
         this.offerKey = in.readString();
+        this.userIdToken = in.readString();
+        this.empIdToken = in.readString();
     }
 
     public static final Creator<RequestingOfferDetails> CREATOR = new Creator<RequestingOfferDetails>() {

@@ -28,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 
@@ -256,6 +257,7 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
                             dateFrom, dateTo, user.getUid(),
                             adults, children, infants, over65, notes,
                             specialOffer.getName(), specialOffer.getDetails(), specialOffer.getImageUrl());
+            offerRequest.setUserIdToken(FirebaseInstanceId.getInstance().getToken());
         } else {//Custom offer so you need some more fields
 
             String placeFrom = null, budget = null;
@@ -268,8 +270,8 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
                     dateFrom, dateTo, user.getUid(),
                     adults, children, infants, over65, notes,
                     Constants.OFFER_CUSTOM, pack, hotel, placeFrom, placeTo, budget, currency);
+            offerRequest.setUserIdToken(FirebaseInstanceId.getInstance().getToken());
         }
-
 
         if (currentOfferSpecial) {
             // If all needed data are filled done the needed pushing
@@ -325,8 +327,13 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
                 requestedOfferId,
                 offerName,
                 user.getName(),
-                imageUrl, employeeKey);
+                imageUrl,
+                employeeKey);
     }
+
+
+    //region String and date manipulating
+
 
     @NonNull
     private String extractTrimmedString(EditText editText) {
@@ -337,7 +344,7 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
         if (name == null) return;
         EditText[] editTexts = {etFirstName, etSecondName, etThirdName};
         String[] tripleName = name.split(" ");
-        for (int i = 0; i < tripleName.length; i++) {
+        for (int i = 0; i < 3; i++) {
 
             editTexts[i].setText(tripleName[i]);
         }
@@ -367,6 +374,9 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
             etDateTo.setError(null);
         }
     }
+
+    //endregion
+
 
     private void setUpToolbar() {
 

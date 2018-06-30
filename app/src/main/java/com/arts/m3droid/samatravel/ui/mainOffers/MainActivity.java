@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         verifyUserAuth();
 
+
         if (specialOffers == null)
             specialOffers = new ArrayList<>();
 
@@ -354,7 +355,7 @@ public class MainActivity extends AppCompatActivity
         {
             favOffersRef.child(specialOffer.getUid()).setValue(specialOffer.getUid());
             favOffersIds.add(specialOffer.getUid());
-            Toast.makeText(this, "تم حذف هذا العرض من المفضلات", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "تم اضافه هذا العرض من المفضلات", Toast.LENGTH_SHORT).show();
             view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fav_icon));
         }
     }
