@@ -71,8 +71,8 @@ public class AuthUIActivity extends AppCompatActivity {
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setLogo(R.drawable.reg_app_logo)
                         .setIsSmartLockEnabled(false)
+                        .setLogo(R.drawable.transparent)
                         .setTheme(R.style.auth_theme)
                         .setAvailableProviders(Arrays.asList(
                                 new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -127,7 +127,7 @@ public class AuthUIActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.txt_require_internet, Toast.LENGTH_SHORT).show();
             }
 
-            if (Objects.requireNonNull(response.getError().getErrorCode()) == ErrorCodes.PROVIDER_ERROR){
+            if (Objects.requireNonNull(response.getError().getErrorCode()) == ErrorCodes.PROVIDER_ERROR) {
                 Toast.makeText(this, R.string.txt_require_internet, Toast.LENGTH_SHORT).show();
 
             }

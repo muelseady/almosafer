@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    app:edMenuBackground="#EEEEEE"
+    app:edMenuBackground="@color/colorPrimaryDark"
     app:edMenuSize="260dp"
     app:edPosition="2">
 
@@ -38,13 +38,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/background"
-            android:scaleType="centerCrop"
-            android:src="@drawable/background" />
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:adjustViewBounds="true"-->
+            <!--android:contentDescription="@string/background"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@drawable/background" />-->
 
         <ScrollView
             android:layout_width="match_parent"
@@ -60,6 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
+                    android:background="@color/colorPrimaryDark"
                     android:contentDescription="@string/app_name"
                     android:scaleType="fitCenter"
                     android:src="@drawable/main_logo" />

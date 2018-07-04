@@ -96,7 +96,12 @@ public class MainActivity extends AppCompatActivity
 
         ButterKnife.bind(this);
         verifyUserAuth();
-
+//        if (getIntent().getExtras() != null) {
+//            for (String key : getIntent().getExtras().keySet()) {
+//                String value = getIntent().getExtras().getString(key);
+//                Log.d(TAG, "Key: " + key + " Value: " + value);
+//            }
+//        }
 
         if (specialOffers == null)
             specialOffers = new ArrayList<>();
@@ -173,6 +178,8 @@ public class MainActivity extends AppCompatActivity
                             addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (user.getGoinOnOffers() != null)
+                                        user.getGoinOnOffers().clear();
                                     for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
                                         RequestingOfferDetails requestingOffer =
                                                 goinOffersSnap.getValue(RequestingOfferDetails.class);
@@ -313,6 +320,7 @@ public class MainActivity extends AppCompatActivity
                         for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
                             favOffersIds.add(goinOffersSnap.getKey());
                         }
+                        if (favOffersIds.size() == 0) return;
                         adapter.notifyDataSetChanged();
                     }
 

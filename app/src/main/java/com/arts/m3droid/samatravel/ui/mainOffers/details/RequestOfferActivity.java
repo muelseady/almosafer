@@ -158,6 +158,7 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
         setUpToolbar();
 
         btnSpecialOfferRequest.setOnClickListener(v -> submitButtonClicked());
+        btnSpecialOfferRequest.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
         etDateFrom.setOnClickListener(v -> setUpDatePicker(true));
         etDateTo.setOnClickListener(v -> setUpDatePicker(false));
@@ -344,7 +345,15 @@ public class RequestOfferActivity extends AppCompatActivity implements DatePicke
         if (name == null) return;
         EditText[] editTexts = {etFirstName, etSecondName, etThirdName};
         String[] tripleName = name.split(" ");
-        for (int i = 0; i < 3; i++) {
+
+        int arrayLength = 0;
+        if (tripleName.length > 3) {
+            arrayLength = 3;
+        } else {
+            arrayLength = tripleName.length;
+        }
+
+        for (int i = 0; i < arrayLength; i++) {
 
             editTexts[i].setText(tripleName[i]);
         }

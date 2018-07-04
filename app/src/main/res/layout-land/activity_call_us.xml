@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_land">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_16">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/contact_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include layout="@layout/social_footer" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact_container">
+
+            <TextView
+                android:id="@+id/tv_contacts"
+                style="@style/tv_request_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_32"
+                android:text="@string/txt_contact_whats"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/wats1"
+                style="@style/iv_phone_number"
+                android:background="@drawable/whats_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_contacts" />
+
+            <TextView
+                android:id="@+id/tv_first_number"
+                style="@style/tv_phone_numbers"
+                android:text="966-5555-93814"
+                app:layout_constraintBottom_toBottomOf="@+id/wats1"
+                app:layout_constraintStart_toStartOf="@id/wats1"
+                app:layout_constraintTop_toTopOf="@id/wats1" />
+
+            <ImageView
+                android:id="@+id/wats2"
+                style="@style/iv_phone_number"
+                android:background="@drawable/whats_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wats1" />
+
+            <TextView
+                android:id="@+id/tv_second_number"
+                style="@style/tv_phone_numbers"
+                android:text="966-5568-65563"
+                app:layout_constraintBottom_toBottomOf="@+id/wats2"
+                app:layout_constraintStart_toStartOf="@id/wats2"
+                app:layout_constraintTop_toTopOf="@id/wats2" />
+
+            <TextView
+                android:id="@+id/tv_land_numbers"
+                style="@style/tv_request_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_32"
+                android:text="او من خلال الاتصال مباشره"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wats2"
+                app:layout_goneMarginTop="@dimen/dp_16" />
+
+            <ImageView
+                android:id="@+id/land1"
+                style="@style/iv_phone_number"
+                android:background="@drawable/landline_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_land_numbers" />
+
+            <TextView
+                android:id="@+id/tv_third_number"
+                style="@style/tv_phone_numbers"
+                android:text="00966-1255-03003"
+                app:layout_constraintBottom_toBottomOf="@id/land1"
+                app:layout_constraintStart_toStartOf="@id/land1"
+                app:layout_constraintTop_toTopOf="@id/land1" />
+
+            <ImageView
+                android:id="@+id/land2"
+                style="@style/iv_phone_number"
+                android:background="@drawable/landline_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/land1" />
+
+            <TextView
+                android:id="@+id/tv_fourth_number"
+                style="@style/tv_phone_numbers"
+                android:text="00966-1273-31497"
+                app:layout_constraintBottom_toBottomOf="@+id/land2"
+                app:layout_constraintStart_toStartOf="@id/land2"
+                app:layout_constraintTop_toTopOf="@id/land2" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

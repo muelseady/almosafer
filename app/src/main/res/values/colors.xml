@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1976D2</color>
-    <color name="colorPrimaryDark">#0D47A1</color>
-    <color name="colorAccent">#EF476F</color>
+    <color name="colorPrimary">#0A3351</color>
+    <color name="colorPrimaryDark">#0A3351</color>
+    <color name="colorAccent">#FFAB40</color>
 
-    <color name="ligh_background">#64B5F6</color>
+    <color name="ligh_background">#FFAB40</color>
 
     <color name="cancelled_offer_card">#f44336</color>
     <color name="goingOn_offer_card">#03A9F4</color>

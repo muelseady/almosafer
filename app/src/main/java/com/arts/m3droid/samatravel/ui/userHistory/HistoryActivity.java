@@ -33,7 +33,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryOffersA
         setContentView(R.layout.activity_history);
         ButterKnife.bind(this);
 
-        handleComingIntent();
+        user = getIntent().getParcelableExtra(Constants.NODE_USERS);
         if (user.getGoinOnOffers() == null) {
             emptyView.setVisibility(View.VISIBLE);
             rvOffersHistory.setVisibility(View.GONE);
@@ -45,9 +45,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryOffersA
         setUpToolbar();
     }
 
-    private void handleComingIntent() {
-        user = getIntent().getParcelableExtra(Constants.NODE_USERS);
-    }
 
     private void setUpRecyclerView() {
         rvOffersHistory.setHasFixedSize(true);
@@ -55,6 +52,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryOffersA
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         rvOffersHistory.setLayoutManager(layoutManager);
+//        Timber.d(user.getGoinOnOffers().);
         HistoryOffersAdapter adapter =
                 new HistoryOffersAdapter(user.getGoinOnOffers(), this);
         rvOffersHistory.setAdapter(adapter);

@@ -11,6 +11,7 @@
 
     <style name="NoActionTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
@@ -76,12 +77,13 @@
         <item name="android:inputType">date</item>
     </style>
 
-    <style name="auth_theme">
+    <style name="auth_theme" parent="NoActionTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="android:windowBackground">@drawable/background</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:windowBackground">@drawable/login_background</item>
 
     </style>
 
@@ -89,9 +91,37 @@
     <style name="tv_history_details">
         <item name="android:gravity">center</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="tv_main_white">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="tv_phone_numbers">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/dp_48</item>
+        <item name="android:layout_marginStart">@dimen/dp_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="iv_phone_number">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginEnd">@dimen/dp_32</item>
+        <item name="android:layout_marginStart">@dimen/dp_32</item>
+        <item name="android:layout_marginTop">@dimen/dp_16</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
 

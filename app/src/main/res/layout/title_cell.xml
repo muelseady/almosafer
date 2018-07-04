@@ -37,11 +37,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/tv_history_details"
+                    style="@style/tv_main_white"
                     android:text="@string/txt_name" />
 
                 <TextView
-                    style="@style/tv_history_details"
+                    style="@style/tv_main_white"
                     android:text="@string/txt_number" />
             </LinearLayout>
 
@@ -53,11 +53,11 @@
 
                 <TextView
                     android:id="@+id/tv_client_name"
-                    style="@style/tv_history_details" />
+                    style="@style/tv_main_white" />
 
                 <TextView
                     android:id="@+id/tv_client_number"
-                    style="@style/tv_history_details" />
+                    style="@style/tv_main_white" />
 
             </LinearLayout>
         </LinearLayout>

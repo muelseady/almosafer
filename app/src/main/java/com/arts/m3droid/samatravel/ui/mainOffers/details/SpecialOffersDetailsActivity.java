@@ -66,9 +66,10 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
 
         handleReceivedIntent();
         setUpToolbar();
-        setUpRequestButton();
         setUpAnimations();
         nestedScrollView.setNestedScrollingEnabled(true);
+
+        setUpRequestButton();
 
         tvContact.setTextColor(getResources().getColor(R.color.black));
         ivFb.setOnClickListener(v -> handleFb(this));
@@ -84,9 +85,10 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
     }
 
     private void setUpRequestButton() {
-        btnRequestOffer.setMode(ActionProcessButton.Mode.ENDLESS);
-        btnRequestOffer.setText(getResources().getText(R.string.txt_request_offer));
-        btnRequestOffer.setProgress(75);
+//        btnRequestOffer.setMode(ActionProcessButton.Mode.ENDLESS);
+//        btnRequestOffer.setProgress(75);
+        btnRequestOffer.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
         btnRequestOffer.setOnClickListener(v -> {
             Intent intent = new Intent(this, RequestOfferActivity.class);
             intent.putExtra(Constants.DATA_SPECIAL_OFFER, specialOffer);
@@ -107,8 +109,6 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar == null) return;
-
-        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
     }
 

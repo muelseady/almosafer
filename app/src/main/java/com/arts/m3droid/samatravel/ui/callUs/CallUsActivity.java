@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneNumberUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arts.m3droid.samatravel.R;
@@ -25,14 +24,14 @@ import static com.arts.m3droid.samatravel.utils.SocialMediaButtonsHandler.handle
 public class CallUsActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.tv_first_number)
-    TextView tvFirstNumber;
-    @BindView(R.id.tv_second_number)
-    TextView tvSecondNumber;
-    @BindView(R.id.tv_third_number)
-    TextView tvThirdNumber;
-    @BindView(R.id.tv_fourth_number)
-    TextView tvFourthNumber;
+    @BindView(R.id.wats1)
+    ImageView tvFirstNumber;
+    @BindView(R.id.wats2)
+    ImageView tvSecondNumber;
+    @BindView(R.id.land1)
+    ImageView tvThirdNumber;
+    @BindView(R.id.land2)
+    ImageView tvFourthNumber;
     @BindView(R.id.iv_twitter)
     ImageView ivTwitter;
     @BindView(R.id.iv_fb)

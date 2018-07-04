@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mxn.soul.flowingdrawer_core.FlowingDrawer xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    app:edMenuBackground="@color/colorPrimaryDark"
+    app:edMenuSize="260dp"
+    app:edPosition="2">
+
+    <!--content-->
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_land"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_special_offers"
+            android:name="com.arts.m3droid.samatravel.ui.specialOffer.SpecialOffersFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_16"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toTopOf="@id/contact_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include layout="@layout/social_footer" />
+    </android.support.constraint.ConstraintLayout>
+
+    <!--menu-->
+    <com.mxn.soul.flowingdrawer_core.FlowingMenuLayout
+        android:id="@+id/menulayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:contentDescription="@string/background"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/background" />-->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/id_container_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:background="@color/colorPrimaryDark"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/main_logo" />
+
+                <TextView
+                    android:id="@+id/tv_custom_offer"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_custom_icon"
+                    android:text="@string/txt_custom_offers" />
+
+                <TextView
+                    android:id="@+id/tv_history"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_history_icon"
+                    android:text="@string/txt_history" />
+
+                <TextView
+                    android:id="@+id/tv_fav"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_fav_icon"
+                    android:text="@string/txt_fav_offers" />
+
+                <TextView
+                    android:id="@+id/tv_call_us"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_call_icon"
+                    android:text="@string/txt_call_us" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_32"
+                    android:background="@color/cardview_dark_background" />
+
+                <TextView
+                    android:id="@+id/tv_signOut"
+                    style="@style/drawer_text"
+                    android:drawableStart="@drawable/drawer_signout_icon"
+                    android:text="@string/txt_sign_out" />
+            </LinearLayout>
+        </ScrollView>
+
+    </com.mxn.soul.flowingdrawer_core.FlowingMenuLayout>
+</com.mxn.soul.flowingdrawer_core.FlowingDrawer>
+

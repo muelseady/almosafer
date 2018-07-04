@@ -31,7 +31,7 @@
                     android:id="@+id/cell_content_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/history_background"
+                    android:background="@color/colorPrimaryDark"
                     android:visibility="gone">
 
                     <include
@@ -64,12 +64,12 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    style="@style/tv_history_details"
+                                    style="@style/tv_main_white"
                                     android:layout_weight="1"
                                     android:text="@string/txt_date_from" />
 
                                 <TextView
-                                    style="@style/tv_history_details"
+                                    style="@style/tv_main_white"
                                     android:layout_weight="1"
                                     android:text="@string/txt_date_to" />
                             </LinearLayout>
@@ -82,12 +82,12 @@
 
                                 <TextView
                                     android:id="@+id/tv_date_from"
-                                    style="@style/tv_history_details"
+                                    style="@style/tv_main_white"
                                     android:layout_weight="1" />
 
                                 <TextView
                                     android:id="@+id/tv_date_to"
-                                    style="@style/tv_history_details"
+                                    style="@style/tv_main_white"
                                     android:layout_weight="1" />
                             </LinearLayout>
                         </LinearLayout>
@@ -102,12 +102,12 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                style="@style/tv_history_details"
+                                style="@style/tv_main_white"
                                 android:text="@string/txt_ppl_number" />
 
                             <TextView
                                 android:id="@+id/ppl_count"
-                                style="@style/tv_history_details"
+                                style="@style/tv_main_white"
                                 android:layout_marginStart="@dimen/dp_16" />
                         </LinearLayout>
 
@@ -121,13 +121,13 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                style="@style/tv_history_details"
+                                style="@style/tv_main_white"
                                 android:text="@string/txt_from_place"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/et_place_from"
-                                style="@style/tv_history_details"
+                                style="@style/tv_main_white"
                                 android:layout_marginStart="@dimen/dp_8" />
 
                             <ImageView
@@ -141,13 +141,13 @@
                                 tools:ignore="ContentDescription" />
 
                             <TextView
-                                style="@style/tv_history_details"
+                                style="@style/tv_main_white"
                                 android:text="@string/txt_to_place"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/et_place_to"
-                                style="@style/tv_history_details"
+                                style="@style/tv_main_white"
                                 android:layout_marginStart="@dimen/dp_8" />
 
                         </LinearLayout>
@@ -178,9 +178,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_messages"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp_8"
-            android:layout_marginTop="@dimen/dp_8"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/dp_8"
             app:layout_constraintBottom_toTopOf="@id/user_input_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

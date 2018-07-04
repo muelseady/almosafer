@@ -7,33 +7,42 @@ exports.PushNotification = functions.database.ref('/unAnsweredOffers/{pushId}')
 
       // Grab the current value of what was written to the Realtime Database.
       const original = snapshot.val();
-      console.log(context.params.pushId, original);
+
+      let key = "not specified";
+
+      if (original.employeeKey !== null) {
+        key = original.employeeKey
+      }
 
       const payload = {
-              notification: {
-                  title:'newOffer',
-                  body: original.userName ,
-                  sound: "default"
+              data: {
+                  title: ' طلب جديد ' + original.offerName,
+                  body: '  من  ' + original.userName ,
+                  categ: 'newOffer',
+                  employeeKey: key
       }
     };
 
-    const empls = []
+    var empls = [];
 
-    const ref =  admin.database().ref(`/employeeNotification/{employeeId}`)
-         .once('value' , function(snapshot) {
-              snapshot.forEach(function(child) {
+    const ref =  admin.database().ref('/employeeNotification/')
+    .once('value').then(snapshot => {
+      const value = snapshot.val();
+            snapshot.forEach(function(child) {
+              empls.push(child.val());
+            });
+      return admin.messaging().sendToDevice(empls, payload);
 
-    console.log(child);
-             });
+      // Update the parent. This effectively removes the extra children.
+    })
+    .catch(function(e) {
+      console.log(e);
+    });
 
-             return admin.messaging().sendToDevice(child, payload);
-
-
-         });
 
       // You must return a Promise when performing asynchronous tasks inside a Functions such as
       // writing to the Firebase Realtime Database.
-      // return admin.messaging().sendToDevice(token, payload);
+      return 0;
     });
 
 //Export notification upon any new messages from employee or user
@@ -46,12 +55,18 @@ exports.PushMessageNotification = functions.database.ref('/users/{userId}/goingo
 
         console.log(senderCat);
 
+        //Notification data to be send to the targeted device
         const payload = {
-                notification: {
-                      title:'رساله جديده',
-                      body: '  من  ' + snapshot.val().senderName  ,
-                      sound: "default"
-                    }
+                // notification: {
+                //       title:'رساله جديده',
+                //       body: '  من  ' + snapshot.val().senderName  ,
+                //       sound: "default"
+                //     },
+                data: {
+                    "userId": userId,
+                    "offerId": offerId,
+                    "senderName" : snapshot.val().senderName
+                  }
                   };
 
 
@@ -80,4 +95,5 @@ exports.PushMessageNotification = functions.database.ref('/users/{userId}/goingo
 
           // You must return a Promise when performing asynchronous tasks inside a Functions such as
           // writing to the Firebase Realtime Database.
+          return null;
         });

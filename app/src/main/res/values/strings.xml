@@ -26,7 +26,7 @@
     <string name="txt_infant">رضع ۰ - ۲ سنه</string>
     <string name="txt_desc">استفسارات</string>
     <string name="txt_done_request">اطلب العرض</string>
-    <string name="txt_contact_us">تواصل مباشره علي …</string>
+    <string name="txt_contact_us">تواصل معنا مباشره علي </string>
     <string name="txt_offer_delivered">تم ايصال الطلب. ستصلك رساله عاجلا من احد ممثلينا</string>
     <string name="txt_if_invited">في حاله تم دعوتك الي البرنامج بواسطه احد ممثلينا برجاء ادخال الرقم الخاص به</string>
     <string name="txt_welcom">تمتع بتصفح عروض سما المسافر المختلفه</string>
@@ -64,7 +64,7 @@
     <string name="second_number">966556865563</string>
     <string name="third_number">00966125503003</string>
     <string name="fourth_number">00966127331497</string>
-    <string name="txt_contact_whats">او من خلال ارقامنا علي الواتس اب</string>
+    <string name="txt_contact_whats"> او من خلال ارقامنا علي الواتس آب</string>
     <string name="txt_image_done">تم اضافه الصوره</string>
     <string name="txt_error_adding_image">برجاء محاوله اضافه الصوره مره اخري</string>
 
