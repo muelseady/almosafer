@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import com.arts.m3droid.samatravel.model.RequestingOfferDetails;
 import com.arts.m3droid.samatravel.model.User;
 import com.arts.m3droid.samatravel.ui.AuthUIActivity;
-import com.arts.m3droid.samatravel.ui.userHistory.HistoryActivity;
+import com.arts.m3droid.samatravel.ui.userHistory.historyDetails.HistoryOfferDetails;
 import com.arts.m3droid.samatravel.utils.FirebaseFactory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,11 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Timber.d("new offer " + remoteMessage.getData().get("userId"));
             Timber.d("key " + remoteMessage.getData().get("offerId"));
-        }
 
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
 
             //Because of the fact that @onMessageReceived will be triggered in case the app is in foreground
             //So showing the employee a notification is a must to be done manually
@@ -55,50 +51,39 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 startActivity(intent);
 
             } else {
-                Timber.d("User authorized " + remoteMessage.getData().get("body"));
-                retrieveUser();
+                retrieveUser(remoteMessage.getData().get("userId"), remoteMessage.getData().get("offerId"), remoteMessage.getData().get("senderName"));
             }
         }
 
+
     }
 
-    private void retrieveUser() {
-
-        // Create an explicit intent for an Activity in your app
-
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) return;
-        String userKey = currentUser.getUid();
-        String userName = currentUser.getDisplayName();
-        String userNumber = null;
-        String userEmail = null;
-        if (currentUser.getPhoneNumber() != null) {
-            userNumber = currentUser.getPhoneNumber();
-        }
-        if (currentUser.getEmail() != null) {
-            userEmail = currentUser.getEmail();
-        }
-        User user = new User(userKey, userName, userNumber, userEmail);
-
-
-        Timber.d("Retrieved user " + user.getName());
-
-        FirebaseFactory.getDatabase().getReference(Constants.NODE_USERS).
-                child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
-                .child(Constants.NODE_GOINGON_OFFERS).
-                addValueEventListener(new ValueEventListener() {
+    private void retrieveUser(String userID, String offerID, String senderName) {
+        FirebaseFactory.getDatabase().getReference(Constants.NODE_USERS)
+                .child(userID)
+                .child(Constants.NODE_GOINGON_OFFERS)
+                .child(offerID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (user.getGoinOnOffers() != null)
-                            user.getGoinOnOffers().clear();
-                        for (DataSnapshot goinOffersSnap : dataSnapshot.getChildren()) {
-                            RequestingOfferDetails requestingOffer =
-                                    goinOffersSnap.getValue(RequestingOfferDetails.class);
-                            Objects.requireNonNull(requestingOffer).setOfferKey(goinOffersSnap.getKey());
-                            user.setGoingOnOffers(requestingOffer);
-                        }
-                        createNotification(user, Objects.requireNonNull(userName));
+                        RequestingOfferDetails requestingOfferDetails =
+                                dataSnapshot.getValue(RequestingOfferDetails.class);
+                        Objects.requireNonNull(requestingOfferDetails).setOfferKey(dataSnapshot.getKey());
+
+                        FirebaseFactory.getDatabase().getReference(Constants.NODE_USERS)
+                                .child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                User user = dataSnapshot.getValue(User.class);
+
+                                createNotification(user, requestingOfferDetails, senderName);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -106,24 +91,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                     }
                 });
-
-
     }
 
-    private void createNotification(User user, String userName) {
 
-        if (userName.equals(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName()))
-            return;
-        Intent intent = new Intent(this, HistoryActivity.class);
+    private void createNotification(User user, RequestingOfferDetails offerDetails, String senderName) {
+
+        Intent intent = new Intent(this, HistoryOfferDetails.class);
+
         intent.putExtra(Constants.NODE_USERS, user);
-        Timber.d("offers " + user.getGoinOnOffers().size() + " name " + user.getName());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        intent.putExtra(Constants.NODE_GOINGON_OFFERS, offerDetails);
+        intent.setAction("id");
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "com.arts.m3droid.empl")
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.notification_logo))
+                .setSmallIcon(R.drawable.notification_logo)
                 .setContentTitle("رساله جديده")
-                .setContentText(userName)
+                .setContentText(" من " + senderName)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
         mBuilder.setAutoCancel(true);

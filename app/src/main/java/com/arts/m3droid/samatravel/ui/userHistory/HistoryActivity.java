@@ -52,7 +52,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryOffersA
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         rvOffersHistory.setLayoutManager(layoutManager);
-//        Timber.d(user.getGoinOnOffers().);
         HistoryOffersAdapter adapter =
                 new HistoryOffersAdapter(user.getGoinOnOffers(), this);
         rvOffersHistory.setAdapter(adapter);

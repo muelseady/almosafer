@@ -30,7 +30,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,7 +41,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 import static com.arts.m3droid.samatravel.Constants.RC_PHOTO_PICKER;
 
@@ -83,6 +81,9 @@ public class HistoryOfferDetails extends AppCompatActivity {
 
     private List<Message> messages = new ArrayList<>();
 
+    private MessagesAdapter messageAdapter;
+
+
     @Override
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,33 +96,17 @@ public class HistoryOfferDetails extends AppCompatActivity {
         btnSendMessage.setOnClickListener(v -> sendButtonClicked());
         btnSelectImage.setOnClickListener(v -> onPhotoPickerClicked());
 
-        DatabaseReference goinOfferReference =
-                FirebaseFactory.getDatabase().getReference(Constants.NODE_USERS)
-                        .child(user.getUid())
-                        .child(Constants.NODE_GOINGON_OFFERS)
-                        .child(offerDetails.getOfferKey())
-                        .child("Employee");
-        goinOfferReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Timber.d("employee token " + dataSnapshot.getValue());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        fetchMessages();
         editTextWatcher();
-
     }
 
     private void handleComingIntent() {
         Intent intent = getIntent();
+
         offerDetails = intent.getParcelableExtra(Constants.NODE_GOINGON_OFFERS);
         user = intent.getParcelableExtra(Constants.NODE_USERS);
+
+        fetchMessages();
+
         setUpViews();
     }
 
@@ -133,6 +118,9 @@ public class HistoryOfferDetails extends AppCompatActivity {
                 child(userUID).child(Constants.NODE_GOINGON_OFFERS).
                 child(offerId).
                 child(Constants.MESSAGES_NODE_DB);
+
+        if (messages.size() > 0) messageAdapter.clear();
+
         mUsersChatDbRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
@@ -212,7 +200,7 @@ public class HistoryOfferDetails extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         messagesRv.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setStackFromEnd(true);
-        MessagesAdapter messageAdapter = new MessagesAdapter(messages);
+        messageAdapter = new MessagesAdapter(messages);
         messagesRv.setAdapter(messageAdapter);
     }
 
@@ -267,10 +255,8 @@ public class HistoryOfferDetails extends AppCompatActivity {
                         null,
                         imageUrl, Constants.CAT_USER, user.getName());
                 mUsersChatDbRef.push().setValue(message);
-                btnSelectImage.setEnabled(false);
             } else { // Error happen this's how gonna handle it
                 Toast.makeText(this, R.string.txt_error_adding_image, Toast.LENGTH_LONG).show();
-                btnSelectImage.setEnabled(true);
             }
         });
 
