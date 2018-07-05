@@ -110,7 +110,6 @@ public class FavoriteActivity extends AppCompatActivity implements FavOfferAdapt
         rvSpecialOffers.setLayoutManager(layoutManager);
         FavOfferAdapter adapter = new FavOfferAdapter(
                 this::onClick,
-                this,
                 currentFavOffers
         );
         rvSpecialOffers.setAdapter(adapter);

@@ -80,7 +80,7 @@ public class SpecialOffersDetailsActivity extends AppCompatActivity {
 
     private void setUpAnimations() {
         YoYo.with(Techniques.ZoomInDown)
-                .duration(1000)
+                .duration(1500)
                 .playOn(container);
     }
 

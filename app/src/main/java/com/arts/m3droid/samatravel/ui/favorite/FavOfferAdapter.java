@@ -1,6 +1,5 @@
 package com.arts.m3droid.samatravel.ui.favorite;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import butterknife.ButterKnife;
 public class FavOfferAdapter extends RecyclerView.Adapter<FavOfferAdapter.FavOfferViewHolder> {
 
     private OffersAdapter.OnItemClicked clickListener;
-    private Context context;
     private List<SpecialOffer> favOffers;
 
     public interface OnItemClicked {
@@ -29,9 +27,8 @@ public class FavOfferAdapter extends RecyclerView.Adapter<FavOfferAdapter.FavOff
     }
 
 
-    FavOfferAdapter(OffersAdapter.OnItemClicked clickListener, Context context, List<SpecialOffer> favOffers) {
+    FavOfferAdapter(OffersAdapter.OnItemClicked clickListener, List<SpecialOffer> favOffers) {
         this.clickListener = clickListener;
-        this.context = context;
         this.favOffers = favOffers;
     }
 

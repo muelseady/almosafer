@@ -57,11 +57,6 @@ exports.PushMessageNotification = functions.database.ref('/users/{userId}/goingo
 
         //Notification data to be send to the targeted device
         const payload = {
-                // notification: {
-                //       title:'رساله جديده',
-                //       body: '  من  ' + snapshot.val().senderName  ,
-                //       sound: "default"
-                //     },
                 data: {
                     "userId": userId,
                     "offerId": offerId,

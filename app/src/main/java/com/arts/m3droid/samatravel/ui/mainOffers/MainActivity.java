@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity
 
     OffersAdapter adapter;
 
-
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +195,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
     //endregion
 
 
@@ -351,14 +349,16 @@ public class MainActivity extends AppCompatActivity
             Timber.d("size " + favOffersIds.size());
             favOffersRef.child(specialOffer.getUid()).removeValue();
             view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.unfav_icon));
+
             Toast.makeText(this, "تم حذف هذا العرض من المفضلات", Toast.LENGTH_SHORT).show();
         } else
 
         {
             favOffersRef.child(specialOffer.getUid()).setValue(specialOffer.getUid());
             favOffersIds.add(specialOffer.getUid());
-            Toast.makeText(this, "تم اضافه هذا العرض من المفضلات", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "تم اضافه هذا العرض إلى المفضلات", Toast.LENGTH_SHORT).show();
             view.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.fav_icon));
+//            view.setAnimation();
         }
     }
 
