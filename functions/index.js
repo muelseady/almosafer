@@ -8,19 +8,14 @@ exports.PushNotification = functions.database.ref('/unAnsweredOffers/{pushId}')
       // Grab the current value of what was written to the Realtime Database.
       const original = snapshot.val();
 
-      let key = "not specified";
-
-      if (original.employeeKey !== null) {
-        key = original.employeeKey
-      }
+console.log( original.employeeKey);
 
       const payload = {
               data: {
                   title: ' طلب جديد ' + original.offerName,
                   body: '  من  ' + original.userName ,
                   categ: 'newOffer',
-                  employeeKey: key
-      }
+                  employeeKey: 'key ' + original.employeeKey      }
     };
 
     var empls = [];
@@ -60,6 +55,7 @@ exports.PushMessageNotification = functions.database.ref('/users/{userId}/goingo
                 data: {
                     "userId": userId,
                     "offerId": offerId,
+                      "categ": 'newMessage',
                     "senderName" : snapshot.val().senderName
                   }
                   };

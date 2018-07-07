@@ -59,13 +59,13 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.SpecialVie
         SpecialOffer specialOffer = specialOffers.get(position);
 
         ImageUtils.setImageOnImageView(specialOffer.getImageUrl(), holder.offerCard);
+        Timber.d(specialOffer.getImageUrl() + " url ");
 
         if (favOffers.isEmpty()) return;
 
         //Todo the problem is still lying here when ever kill the activity and back the favorite offers shown not correctly!!
         boolean thisOfferIsFavorite = false;
         for (String favOfferId : favOffers) {
-            Timber.d("called with favOfferId " + favOfferId + "  special offer id " + specialOffer.getUid());
             if (favOfferId.equals(specialOffer.getUid()))
                 thisOfferIsFavorite = true;
         }

@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity
                 SpecialOffer specialOffer = dataSnapshot.getValue(SpecialOffer.class);
                 if (specialOffer == null) return;
                 specialOffer.setUid(dataSnapshot.getKey());
+                Timber.d("images " + specialOffer.getImageUrl());
 
                 specialOffers.add(specialOffer);
                 setUpRecyclerView();
