@@ -11,11 +11,11 @@ android {
             storePassword '0185866301'
         }
     }
-    compileSdkVersion 27
+    compileSdkVersion 34
     defaultConfig {
         applicationId "com.arts.m3droid.samatravel"
         minSdkVersion 17
-        targetSdkVersion 27
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
